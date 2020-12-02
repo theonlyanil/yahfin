@@ -29,19 +29,19 @@ def getIncomeStatementHistory(symbol):
     jsonData = req.json()
     income_statements = jsonData['quoteSummary']['result'][0]['incomeStatementHistory']['incomeStatementHistory']
     df = pd.DataFrame(income_statements)
-    df['endDate'] = fmt(df['endDate'])
+    df['endDate'] = formatCell(df['endDate'], 'fmt')
+    df['endDate'] = formatCell(df['endDate'], 'fmt')
+    df['endDate'] = formatCell(df['endDate'], 'fmt')
+    df['endDate'] = formatCell(df['endDate'], 'fmt')
     df.to_csv('d.csv')
     print(df)
 
-def fmt(df_series):
+def formatCell(df_series, dataType):
     results = []
     for item in df_series:
-        item = item['fmt']
+        item = item[dataType]
         results.append(item)
     return results
-
-
-
 # Yahoo Finance Symbol Object (YFSO)
 def Symbol(SymbolBase):
 
