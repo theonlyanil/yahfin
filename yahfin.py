@@ -30,17 +30,40 @@ def getIncomeStatementHistory(symbol):
     income_statements = jsonData['quoteSummary']['result'][0]['incomeStatementHistory']['incomeStatementHistory']
     df = pd.DataFrame(income_statements)
     df['endDate'] = formatCell(df['endDate'], 'fmt')
-    df['endDate'] = formatCell(df['endDate'], 'fmt')
-    df['endDate'] = formatCell(df['endDate'], 'fmt')
-    df['endDate'] = formatCell(df['endDate'], 'fmt')
+    df['totalRevenue'] = formatCell(df['totalRevenue'], 'raw')
+    df['costOfRevenue'] = formatCell(df['costOfRevenue'], 'raw')
+    df['grossProfit'] = formatCell(df['grossProfit'], 'raw')
+    df['researchDevelopment'] = formatCell(df['researchDevelopment'], 'raw')
+    df['sellingGeneralAdministrative'] = formatCell(df['sellingGeneralAdministrative'], 'raw')
+    df['nonRecurring'] = formatCell(df['nonRecurring'], 'raw')
+    df['otherOperatingExpenses'] = formatCell(df['otherOperatingExpenses'], 'raw')
+    df['operatingIncome'] = formatCell(df['operatingIncome'], 'raw')
+    df['totalOperatingExpenses'] = formatCell(df['totalOperatingExpenses'], 'raw')
+    df['totalOtherIncomeExpenseNet'] = formatCell(df['totalOtherIncomeExpenseNet'], 'raw')
+    df['ebit'] = formatCell(df['ebit'], 'raw')
+    df['interestExpense'] = formatCell(df['interestExpense'], 'raw')
+    df['incomeBeforeTax'] = formatCell(df['incomeBeforeTax'], 'raw')
+    df['incomeTaxExpense'] = formatCell(df['incomeTaxExpense'], 'raw')
+    df['minorityInterest'] = formatCell(df['minorityInterest'], 'raw')
+    df['netIncomeFromContinuingOps'] = formatCell(df['netIncomeFromContinuingOps'], 'raw')
+    df['discontinuedOperations'] = formatCell(df['discontinuedOperations'], 'raw')
+    df['extraordinaryItems'] = formatCell(df['extraordinaryItems'], 'raw')
+    df['effectOfAccountingCharges'] = formatCell(df['effectOfAccountingCharges'], 'raw')
+    df['otherItems'] = formatCell(df['otherItems'], 'raw')
+    df['netIncome'] = formatCell(df['netIncome'], 'raw')
+    df['netIncomeApplicableToCommonShares'] = formatCell(df['netIncomeApplicableToCommonShares'], 'raw')
+
     df.to_csv('d.csv')
     print(df)
 
 def formatCell(df_series, dataType):
     results = []
     for item in df_series:
-        item = item[dataType]
-        results.append(item)
+        try:
+            item = item[dataType]
+            results.append(item)
+        except Exception as e:
+            results.append(0)
     return results
 # Yahoo Finance Symbol Object (YFSO)
 def Symbol(SymbolBase):
