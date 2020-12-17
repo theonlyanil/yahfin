@@ -8,14 +8,16 @@
 import pdb
 from functions import getIncomeStatementHistory
 
-class Ticker:
+# Symbol class object
+class Symbol:
     def __init__(self, symbol):
         self.symbol = symbol
 
-    def getIncomeStatementHistory(self):
+    def incomeStatements(self):
         return getIncomeStatementHistory(self.symbol)
 
 
+# Test!
 if __name__ == "__main__":
-    msft = Ticker('MSFT')
-    print(msft.getIncomeStatementHistory())
+    msft = Symbol('MSFT')
+    print(msft.incomeStatements())
