@@ -12,8 +12,6 @@ getAssetProfile = 'https://query2.finance.yahoo.com/v10/finance/quoteSummary/AAP
   longBusinessSummary,
   employees,
   companyOfficers = [name, age, title, yearBorn, totalPay, exercisedValue, unexercisedValue],
-
-
 }
 
 price = 'https://query2.finance.yahoo.com/v10/finance/quoteSummary/AAPL?modules=price'

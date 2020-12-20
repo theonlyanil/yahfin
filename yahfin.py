@@ -6,7 +6,7 @@
     Started on 8th Nov'20
 """
 import pdb
-from functions import getIncomeStatementHistory
+from functions import getIncomeStatementHistory, getAssetProfile, getPriceData
 
 # Symbol class object
 class Symbol:
@@ -16,8 +16,14 @@ class Symbol:
     def incomeStatements(self):
         return getIncomeStatementHistory(self.symbol)
 
+    def profile(self):
+        return getAssetProfile(self.symbol)
+
+    def priceData(self):
+        return getPriceData(self.symbol)
+
 
 # Test!
 if __name__ == "__main__":
-    msft = Symbol('MSFT')
-    print(msft.incomeStatements())
+    symbol1 = Symbol('AAPL')
+    print(symbol1.priceData())

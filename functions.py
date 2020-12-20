@@ -4,7 +4,7 @@ from utils import formatColumn
 
 base_query = 'https://query2.finance.yahoo.com'
 
-# This function takes in a symbol and gets the latest Income Statements from Yahoo Finance
+"""This function takes in a symbol and gets the latest Income Statements from Yahoo Finance"""
 def getIncomeStatementHistory(symbol):
     url = base_query + f'/v10/finance/quoteSummary/{symbol}?modules=incomeStatementHistory'
     req = requests.get(url)
@@ -36,5 +36,28 @@ def getIncomeStatementHistory(symbol):
     df['otherItems'] = formatColumn(df['otherItems'], 'raw')
     df['netIncome'] = formatColumn(df['netIncome'], 'raw')
     df['netIncomeApplicableToCommonShares'] = formatColumn(df['netIncomeApplicableToCommonShares'], 'raw')
+
+    return df
+
+""" Gets a company's asset profile as in: address, summary, website, employees, etc. """
+def getAssetProfile(symbol):
+    url = base_query + f'/v10/finance/quoteSummary/{symbol}?modules=assetProfile'
+    req = requests.get(url)
+    jsonData = req.json()
+
+    asset_profile = jsonData['quoteSummary']['result'][0]['assetProfile']
+    df = pd.DataFrame(asset_profile)
+
+    return df
+
+# To be modified
+def getPriceData(symbol):
+    url = base_query + f'/v10/finance/quoteSummary/{symbol}?modules=price'
+    req = requests.get(url)
+    jsonData = req.json()
+
+    price_data = jsonData['quoteSummary']['result'][0]['price']
+    df = pd.DataFrame(price_data)
+    df.to_csv('ok.csv')
 
     return df
