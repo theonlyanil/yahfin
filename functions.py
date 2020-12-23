@@ -6,10 +6,8 @@ base_query = 'https://query2.finance.yahoo.com'
 
 """This function takes in a symbol and gets the latest Income Statements from Yahoo Finance"""
 def getIncomeStatementHistory(symbol):
-    url = base_query + f'/v10/finance/quoteSummary/{symbol}?modules=incomeStatementHistory'
-    req = requests.get(url)
-    jsonData = req.json()
-    income_statements = jsonData['quoteSummary']['result'][0]['incomeStatementHistory']['incomeStatementHistory']
+
+    income_statements = v10(symbol, 'incomeStatementHistory')['incomeStatementHistory']['incomeStatementHistory']
     df = pd.DataFrame(income_statements)
 
     # Format cells
@@ -41,22 +39,15 @@ def getIncomeStatementHistory(symbol):
 
 """ Gets a company's asset profile as in: address, summary, website, employees, etc. """
 def getAssetProfile(symbol):
-    url = base_query + f'/v10/finance/quoteSummary/{symbol}?modules=assetProfile'
-    req = requests.get(url)
-    jsonData = req.json()
-
-    asset_profile = jsonData['quoteSummary']['result'][0]['assetProfile']
+    asset_profile = v10(symbol, 'assetProfile')['assetProfile']
     df = pd.DataFrame(asset_profile)
 
     return df
 
 # To be modified
-def getPriceData(symbol):
-    url = base_query + f'/v10/finance/quoteSummary/{symbol}?modules=price'
-    req = requests.get(url)
-    jsonData = req.json()
+def getLivePriceData(symbol):
 
-    price_data = jsonData['quoteSummary']['result'][0]['price']
+    price_data = v10(symbol, 'price')['price']
     df = pd.DataFrame(price_data)
     return df
 
@@ -108,3 +99,11 @@ def v7multi(symbols):
     df = pd.DataFrame(multiData)
     df.set_index('symbol', inplace=True, drop=True)
     return df
+
+""" Yahoo Finance V10 Single Symbol Endpoint with Module(s) feature """
+def v10(symbol, module):
+    url = base_query + f'/v10/finance/quoteSummary/{symbol}?modules={module}'
+    req = requests.get(url)
+    jsonData = req.json()
+    data = jsonData['quoteSummary']['result'][0]
+    return data

@@ -4,9 +4,10 @@
 
     by Anil Sardiwal
     Started on 8th Nov'20
+    last modified on 23/12/2020
 """
 import pdb
-from functions import getIncomeStatementHistory,  getAssetProfile,  getPriceData,  getMultiSymbolData
+from functions import getIncomeStatementHistory,  getAssetProfile,  getLivePriceData,  getMultiSymbolData
 
 # Symbol class object
 class Symbol:
@@ -19,11 +20,14 @@ class Symbol:
     def profile(self):
         return getAssetProfile(self.symbol)
 
-    def priceData(self):
-        return getPriceData(self.symbol)
+    def livePriceData(self):
+        return getLivePriceData(self.symbol)
 
     def multi(self):
         return getMultiSymbolData(self.symbol)
 
 # Test!
 if __name__ == "__main__":
+    msft = Symbol('TSLA')
+
+    print(msft.livePriceData()['preMarketChange']['raw'])
