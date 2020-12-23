@@ -88,11 +88,11 @@ def getMultiSymbolData(symbols):
             # Run v7multi and get a DataFrame and append to base_df
             base_df = base_df.append(v7multi(symbols))
     else:
-        # Iterate through each list containing
-        for singleSymbol in symbolSet:
-            # Run v7multi and get a DataFrame and append to base_df
-            base_df = base_df.append(v7multi(singleSymbol))
+        # convert list into a single String
+        symbols = ",".join(str(x) for x in symbolSet)
 
+        # Run v7multi and get a DataFrame and append to base_df
+        base_df = base_df.append(v7multi(symbols))
     return base_df
 
 """ Yahoo Finance V7 Multi Endpoint """
