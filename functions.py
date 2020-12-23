@@ -60,6 +60,14 @@ def getPriceData(symbol):
     df = pd.DataFrame(price_data)
     return df
 
+"""
+    This function returns data for multiple symbols in one go
+    (or more if symbols are more than 100).
+
+    Input: "AAPL, MSFT, ESCORTS.NS, JSLHISAR.NS" #Spaces_are_optional
+
+    Outputs: CMP, marketCap, Day High+Low+Volume, bid_ask, and more!
+"""
 def getMultiSymbolData(symbols):
     # A base DataFrame to which we will append more DFs later in this function.
     base_df = pd.DataFrame()
