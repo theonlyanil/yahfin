@@ -87,6 +87,11 @@ def getMultiSymbolData(symbols):
 
             # Run v7multi and get a DataFrame and append to base_df
             base_df = base_df.append(v7multi(symbols))
+    else:
+        # Iterate through each list containing
+        for singleSymbol in symbolSet:
+            # Run v7multi and get a DataFrame and append to base_df
+            base_df = base_df.append(v7multi(singleSymbol))
 
     return base_df
 
