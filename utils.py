@@ -15,3 +15,11 @@ def formatColumn(df_series, dataType):
         except Exception as e:
             results.append(0)
     return results
+
+"""
+    Breaks a list into a chunk of pre defined size.
+    Code sourced from Internet.
+"""
+def chunk_list(list, chunk_size):
+    for i in range(0, len(list), chunk_size):
+        yield list[i:i + chunk_size]

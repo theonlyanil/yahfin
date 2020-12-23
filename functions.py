@@ -1,6 +1,6 @@
 import requests
 import pandas as pd
-from utils import formatColumn
+from utils import formatColumn, chunk_list
 
 base_query = 'https://query2.finance.yahoo.com'
 
@@ -58,6 +58,45 @@ def getPriceData(symbol):
 
     price_data = jsonData['quoteSummary']['result'][0]['price']
     df = pd.DataFrame(price_data)
-    df.to_csv('ok.csv')
+    return df
 
+def getMultiSymbolData(symbols):
+    # A base DataFrame to which we will append more DFs later in this function.
+    base_df = pd.DataFrame()
+
+    # first remove spaces, if any
+    symbols = symbols.replace(" ", "")
+
+    # Extract every symbol separated by comma and store in a set (unique values)
+    symbolss = symbols.split(',')
+    symbolSet = set()
+    for symbol in symbolss:
+        symbolSet.add(symbol)
+
+    symbolSet = sorted(symbolSet) # sort the list
+
+    # if symbolSet length is  more than 100, split it into multiples of 100, and
+    # find values and attach to one DataFrame
+    if len(symbolSet) > 100:
+        # Splitting a list into multiple lists of size 100
+        symbolList = list(chunk_list(symbolSet, 100))
+
+        # Iterate through each list containing
+        for singleSymbolList in symbolList:
+            # convert list into a single String
+            symbols = ",".join(str(x) for x in singleSymbolList)
+
+            # Run v7multi and get a DataFrame and append to base_df
+            base_df = base_df.append(v7multi(symbols))
+
+    return base_df
+
+""" Yahoo Finance V7 Multi Endpoint """
+def v7multi(symbols):
+    url = base_query + f"/v7/finance/quote?symbols={symbols}"
+    req = requests.get(url)
+    jsonData = req.json()
+    multiData = jsonData['quoteResponse']['result']
+    df = pd.DataFrame(multiData)
+    df.set_index('symbol', inplace=True, drop=True)
     return df
