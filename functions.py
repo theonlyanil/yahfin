@@ -102,7 +102,6 @@ def v7multi(symbols):
     jsonData = req.json()
     multiData = jsonData['quoteResponse']['result']
     df = pd.DataFrame(multiData)
-    df.set_index('symbol', inplace=True, drop=True)
     return df
 
 """ Yahoo Finance V10 Single Symbol Endpoint with Module(s) feature """
