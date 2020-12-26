@@ -1,6 +1,9 @@
 import requests
 import pandas as pd
-from utils import formatColumn, chunk_list
+import time
+from datetime import datetime
+
+from utils import formatColumn, chunk_list, epochToDatetimeList
 
 base_query = 'https://query2.finance.yahoo.com'
 
@@ -46,7 +49,6 @@ def getAssetProfile(symbol):
 
 # To be modified
 def getLivePriceData(symbol):
-
     price_data = v10(symbol, 'price')['price']
     df = pd.DataFrame(price_data)
     return df
@@ -102,6 +104,7 @@ def v7multi(symbols):
     jsonData = req.json()
     multiData = jsonData['quoteResponse']['result']
     df = pd.DataFrame(multiData)
+    df.set_index('symbol', inplace=True, drop=True)
     return df
 
 """ Yahoo Finance V10 Single Symbol Endpoint with Module(s) feature """
@@ -111,3 +114,23 @@ def v10(symbol, module):
     jsonData = req.json()
     data = jsonData['quoteSummary']['result'][0]
     return data
+
+def v8(symbol, start_date, end_date, interval):
+    url = f'https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?period1={start_date}&period2={end_date}&interval={interval}'
+    print(url)
+    req = requests.get(url)
+    jsonData = req.json()
+    timestamps = jsonData['chart']['result'][0]['timestamp']
+    priceData = jsonData['chart']['result'][0]['indicators']['quote'][0]
+    return [timestamps, priceData]
+
+def getHistoricPrices(symbol, start_date, end_date, period):
+    start = int(time.mktime(time.strptime(str(start_date), '%Y-%m-%d')))
+    end = int(time.mktime(time.strptime(str(end_date), '%Y-%m-%d')))
+
+    data_lists = v8(symbol, start, end, period)
+    timestamps = pd.DataFrame(epochToDatetimeList(data_lists[0]))
+    priceData = pd.DataFrame(data_lists[1])
+
+    final_df = timestamps.join(priceData)
+    return final_df

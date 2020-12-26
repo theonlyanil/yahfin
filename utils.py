@@ -1,3 +1,5 @@
+from datetime import datetime
+
 """
     Column Formatting based on 'raw' or 'fmt'.
     It takes in a dataframe series and formats it based on input dataType.
@@ -23,3 +25,11 @@ def formatColumn(df_series, dataType):
 def chunk_list(list, chunk_size):
     for i in range(0, len(list), chunk_size):
         yield list[i:i + chunk_size]
+
+def epochToDatetimeList(listOfTimestamps):
+    result = []
+    for timestamp in listOfTimestamps:
+        date_time = datetime.fromtimestamp(timestamp)
+        result.append(date_time)
+
+    return result
