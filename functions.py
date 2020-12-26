@@ -115,15 +115,28 @@ def v10(symbol, module):
     data = jsonData['quoteSummary']['result'][0]
     return data
 
+""" Yahoo Finance V8 Single Symbol Endpoint with start, end and interval """
 def v8(symbol, start_date, end_date, interval):
     url = f'https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?period1={start_date}&period2={end_date}&interval={interval}'
     print(url)
     req = requests.get(url)
     jsonData = req.json()
+
+    # We'll need these two data points:
     timestamps = jsonData['chart']['result'][0]['timestamp']
     priceData = jsonData['chart']['result'][0]['indicators']['quote'][0]
+
+    # Returns a list of timestamps and priceData
     return [timestamps, priceData]
 
+"""
+    It gets symbol's historic price data (open, high, low, close) with timestamps.
+
+    Start and End are provided as "YY-mm-dd" and converted to epocs (Yahoo Finance)
+
+    It then calls v8 function (written in this module) and we convert timestamps
+    and priceData into separate DataFrames and then we join both DFs and return.
+"""
 def getHistoricPrices(symbol, start_date, end_date, period):
     start = int(time.mktime(time.strptime(str(start_date), '%Y-%m-%d')))
     end = int(time.mktime(time.strptime(str(end_date), '%Y-%m-%d')))

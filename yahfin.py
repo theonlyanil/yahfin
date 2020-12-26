@@ -11,7 +11,7 @@ from functions import getIncomeStatementHistory,  getAssetProfile,  getLivePrice
 # Symbol class object
 class Symbol:
     def __init__(self,  symbol):
-        self.symbol = symbol
+        self.symbol = symbol.upper()
 
     def incomeStatements(self):
         return getIncomeStatementHistory(self.symbol)
@@ -27,7 +27,7 @@ class Symbol:
 
 class History:
     def __init__(self, symbol, start, end, period):
-        self.symbol = symbol
+        self.symbol = symbol.upper()
         self.start = start
         self.end = end
         self.period = period
