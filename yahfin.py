@@ -6,7 +6,7 @@
     Started on 8th Nov'20
     last modified on 23/12/2020
 """
-from functions import getIncomeStatementHistory,  getAssetProfile,  getLivePriceData,  getMultiSymbolData, getHistoricPrices
+from functions import getIncomeStatementHistory,  getAssetProfile,  getLivePriceData,  getMultiSymbolData, getHistoricPrices, getIncomeStatementsQtr
 
 # Symbol class object
 class Symbol:
@@ -19,6 +19,9 @@ class Symbol:
 
     def incomeStatements(self):
         return getIncomeStatementHistory(self.symbol)
+
+    def incomeStatementsQtr(self):
+        return getIncomeStatementsQtr(self.symbol)
 
     def profile(self):
         return getAssetProfile(self.symbol)
@@ -42,5 +45,8 @@ if __name__ == "__main__":
     #msft = Symbol('TSLA')
     #print(msft.history())
 
-    symbols = Symbol('TSLA, MSFT, AAPL, GOOG')
-    print(symbols.multi()['marketCap'])
+    #symbols = Symbol('TSLA, MSFT, AAPL, GOOG')
+    #print(symbols.multi()['marketCap'])
+
+    tsla = Symbol('TSLA')
+    print(tsla.incomeStatementsQtr())
