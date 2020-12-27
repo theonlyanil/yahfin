@@ -16,6 +16,7 @@ def v7multi(symbols):
     df.set_index('symbol', inplace=True, drop=True)
     return df
 
+""" Yahoo Finance V7 Options Endpoint """
 def v7_options(symbol):
     url = query1 + f'/v7/finance/options/{symbol}'
     req = requests.get(url)

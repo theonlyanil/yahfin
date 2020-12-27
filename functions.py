@@ -128,6 +128,10 @@ def getFinancialAnalysisData(symbol):
     df = df.iloc[:1]
     return df
 
+"""
+    Returns Major Shareholders' percentage share by company's Symbol.
+    New: Added retailers' shareholding.
+"""
 def getMajorHolders(symbol):
     holders = v10(symbol, 'majorHoldersBreakdown')['majorHoldersBreakdown']
     df = pd.DataFrame(holders)
@@ -147,24 +151,30 @@ def getMajorHolders(symbol):
 
     return df
 
+"""
+    This function gets options data of a given symbol. Probably only available for US stocks.
+    Also takes in an input of dataType i.e. calls, puts, dates, strikes, quotes
+"""
 def getOptionsData(symbol, dataType):
     optionsData = v7_options(symbol)
     options = None
+
     if dataType == 'calls':
         options = optionsData['options'][0]['calls']
     elif dataType == 'puts':
         options = optionsData['options'][0]['puts']
     elif dataType == 'dates':
         options = optionsData['expirationDates']
-        options = epochToDatetimeList(options)
+        options = epochToDatetimeList(options)  #because timestamps are unreadable in raw format
     elif dataType == 'strikes':
         options = optionsData['strikes']
     elif dataType == 'quotes':
         options = optionsData['quote']
+        # Passes scaler values, so had to pass an index and return function from here.
         df = pd.DataFrame(options, index=[0])
         return df
     else:
-        options = optionsData['options']
+        # Wrong dataType, empty dataFrame is returned.
         return pd.DataFrame()
 
     df = pd.DataFrame(options)

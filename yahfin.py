@@ -53,7 +53,7 @@ class Symbol:
     def history(self):
         return getHistoricPrices(self.symbol, self.start, self.end, self.period, self.interval)
 
-    def options(self, dataType='strikes'):
+    def options(self, dataType='calls'):
         return getOptionsData(self.symbol, dataType)
 
 # Test!
@@ -84,5 +84,5 @@ if __name__ == "__main__":
     #tsla.livePriceData().to_csv('okokok.csv')
     #print(tsla.livePriceData())
 
-    print(tsla.options('quotes'))
+    print(tsla.options('quotessd'))
     tsla.options('quotes').to_csv('okokok.csv')

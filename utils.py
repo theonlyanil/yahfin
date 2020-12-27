@@ -53,6 +53,9 @@ def chunk_list(list, chunk_size):
     for i in range(0, len(list), chunk_size):
         yield list[i:i + chunk_size]
 
+"""
+    Converts a list of timestamps (epochs) into formatted dateTime
+"""
 def epochToDatetimeList(listOfTimestamps):
     result = []
     for timestamp in listOfTimestamps:
