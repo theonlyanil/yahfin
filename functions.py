@@ -103,3 +103,7 @@ def getIncomeStatementsQtr(symbol):
 def getBalanceSheetYearly(symbol):
     bs = v10(symbol, 'balanceSheetHistory')['balanceSheetHistory']['balanceSheetStatements']
     return returnDf(bs)
+
+def getBalanceSheetQtrly(symbol):
+    bs = v10(symbol, 'balanceSheetHistoryQuarterly')['balanceSheetHistoryQuarterly']['balanceSheetStatements']
+    return returnDf(bs)
