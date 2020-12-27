@@ -115,3 +115,11 @@ def getCashFlowsYearly(symbol):
 def getCashFlowsQtrly(symbol):
     cf = v10(symbol, 'cashflowStatementHistoryQuarterly')['cashflowStatementHistoryQuarterly']['cashflowStatements']
     return returnDf(cf)
+
+def getFinancialAnalysisData(symbol):
+    analysisData = v10(symbol, 'financialData')['financialData']
+    df = pd.DataFrame(analysisData)
+
+    # Keep only the first row i.e. 'raw'
+    df = df.iloc[:1]
+    return df

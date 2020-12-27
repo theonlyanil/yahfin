@@ -30,9 +30,8 @@ def formatColumns(df):
             df[col] = formatColumnCells(df[col], 'fmt')
         else:
             df[col] = formatColumnCells(df[col], 'raw')
-
-    #df.to_csv('okokok.csv')
     return df
+
 
 """
     This was taking more lines of code in functins.py,
@@ -43,7 +42,9 @@ def returnDf(dataFrame):
     df = pd.DataFrame(dataFrame)
     # Format cells
     df = formatColumns(df)
+    df.to_csv('okokok.csv')
     return df
+
 """
     Breaks a list into a chunk of pre defined size.
     Code sourced from Internet.
