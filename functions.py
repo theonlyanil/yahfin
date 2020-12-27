@@ -123,3 +123,22 @@ def getFinancialAnalysisData(symbol):
     # Keep only the first row i.e. 'raw'
     df = df.iloc[:1]
     return df
+
+def getMajorHolders(symbol):
+    holders = v10(symbol, 'majorHoldersBreakdown')['majorHoldersBreakdown']
+    df = pd.DataFrame(holders)
+
+    # Keep only the first row i.e. 'raw'
+    df = df.iloc[:1]
+
+    # renaming columns
+    df = df.rename(columns={"insidersPercentHeld": "promoters", "institutionsFloatPercentHeld": "institutions"})
+
+    pd.to_numeric(df['promoters'])
+    pd.to_numeric(df['institutions'])
+
+    # creating a new column: 'retailers': {1 - (promoters + institutions)}
+    df['retailers'] =  1 - (df['promoters'] + df['institutions'])
+    df = df[['promoters', 'institutions', 'retailers', 'institutionsCount']]
+
+    return df
