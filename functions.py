@@ -1,6 +1,6 @@
 import pandas as pd
 
-from utils import formatColumns, chunk_list, epochToDatetimeList
+from utils import chunk_list, epochToDatetimeList, returnDf
 from engines import v8_period, v8_range, v7multi, v10
 
 """ Gets a company's asset profile as in: address, summary, website, employees, etc. """
@@ -93,16 +93,13 @@ def getHistoricPrices(symbol, start_date=None, end_date=None, period=None, inter
 """This function takes in a symbol and gets the latest Income Statements from Yahoo Finance"""
 def getIncomeStatementHistory(symbol):
     income_statements = v10(symbol, 'incomeStatementHistory')['incomeStatementHistory']['incomeStatementHistory']
-    df = pd.DataFrame(income_statements)
+    return returnDf(income_statements)
 
-    # Format cells
-    df = formatColumns(df)
-    return df
-
+"""This function takes in a symbol and gets the latest Income Statements (Qtrly) from Yahoo Finance"""
 def getIncomeStatementsQtr(symbol):
     income_statements = v10(symbol, 'incomeStatementHistoryQuarterly')['incomeStatementHistoryQuarterly']['incomeStatementHistory']
-    df = pd.DataFrame(income_statements)
+    return returnDf(income_statements)
 
-    df = formatColumns(df)
-    df.to_csv('okok.csv')
-    return df
+def getBalanceSheetYearly(symbol):
+    bs = v10(symbol, 'balanceSheetHistory')['balanceSheetHistory']['balanceSheetStatements']
+    return returnDf(bs)

@@ -1,12 +1,12 @@
 """
     Yahoo Finance API Wrapper
-    v0.1
+    v0.2
 
     by Anil Sardiwal
     Started on 8th Nov'20
-    last modified on 23/12/2020
+    last modified on 27/12/2020
 """
-from functions import getIncomeStatementHistory,  getAssetProfile,  getLivePriceData,  getMultiSymbolData, getHistoricPrices, getIncomeStatementsQtr
+from functions import getIncomeStatementHistory,  getAssetProfile,  getLivePriceData,  getMultiSymbolData, getHistoricPrices, getIncomeStatementsQtr, getBalanceSheetYearly
 
 # Symbol class object
 class Symbol:
@@ -22,6 +22,9 @@ class Symbol:
 
     def incomeStatementsQtr(self):
         return getIncomeStatementsQtr(self.symbol)
+
+    def balanceSheets(self):
+        return getBalanceSheetYearly(self.symbol)
 
     def profile(self):
         return getAssetProfile(self.symbol)
@@ -48,5 +51,8 @@ if __name__ == "__main__":
     #symbols = Symbol('TSLA, MSFT, AAPL, GOOG')
     #print(symbols.multi()['marketCap'])
 
+    #tsla = Symbol('TSLA')
+    #print(tsla.incomeStatementsQtr())
+
     tsla = Symbol('TSLA')
-    print(tsla.incomeStatementsQtr())
+    print(tsla.balanceSheets())
