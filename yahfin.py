@@ -63,10 +63,11 @@ if __name__ == "__main__":
     #msft = Symbol('MSFT')
     #print(msft.profile())
 
-    msft = Symbol('TSLA', start='2020-12-01', end='2020-12-05')
+    #msft = Symbol('TSLA', start='2020-12-01', end='2020-12-05')
     #msft = Symbol('TSLA', start='2020-12-01', end='2020-12-02', interval='3m')
-    #msft = Symbol('TSLA')
+    msft = Symbol('RCF.NS')
     print(msft.history())
+    #msft.history().to_csv('okok.csv')
 
     #symbols = Symbol('TSLA, MSFT, AAPL, GOOG')
     #print(symbols.multi()['marketCap'])
@@ -90,6 +91,6 @@ if __name__ == "__main__":
     #tsla.options('quotes').to_csv('okokok.csv')
 
     #print(tsla.profile())
-    tsla.profile('kmp').to_csv("okok.csv")
+    #tsla.profile('kmp').to_csv("okok.csv")
 
     #print(multi.multi())

@@ -48,7 +48,7 @@ def v8_period(symbol, start_date, end_date, interval):
 
 """ Yahoo Finance V8 Single Symbol Endpoint with range and interval """
 def v8_range(symbol, range, interval):
-    url = f'{query2}/v8/finance/chart/{symbol}?range={range}&interval={interval}'
+    url = f'{query2}/v8/finance/chart/{symbol}?range={range}&interval={interval}&events=divsplit'
     print(url)
     req = requests.get(url)
     jsonData = req.json()
@@ -57,8 +57,9 @@ def v8_range(symbol, range, interval):
         # We'll need these two data points:
         timestamps = jsonData['chart']['result'][0]['timestamp']
         priceData = jsonData['chart']['result'][0]['indicators']['quote'][0]
+        events = jsonData['chart']['result'][0]['events']
 
         # Returns a list of timestamps and priceData
-        return [timestamps, priceData]
+        return [timestamps, priceData, events]
     except Exception as e:
         return 'Please modify your period/interval'

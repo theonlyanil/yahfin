@@ -99,7 +99,9 @@ def getHistoricPrices(symbol, start_date=None, end_date=None, period=None, inter
         timestamps = pd.DataFrame(epochToDatetimeList(data_lists[0]))
         priceData = pd.DataFrame(data_lists[1], columns=['open', 'high', 'low', 'close', 'volume'])
 
+        # Join both DFs
         final_df = timestamps.join(priceData)
+
         final_df.columns = [['Datetime', 'Open', 'High', 'Low', 'Close', 'Volume']]
         return final_df
     except Exception as e:
