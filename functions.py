@@ -1,7 +1,7 @@
 import pandas as pd
 
 from utils import chunk_list, epochToDatetimeList, returnDf
-from engines import v8_period, v8_range, v7multi, v10
+from engines import v8_period, v8_range, v7multi, v10, v7_options
 
 """ Gets a company's asset profile as in: address, summary, website, employees, etc. """
 def getAssetProfile(symbol):
@@ -14,6 +14,10 @@ def getAssetProfile(symbol):
 def getLivePriceData(symbol):
     price_data = v10(symbol, 'price')['price']
     df = pd.DataFrame(price_data)
+
+    # Keep only the first row i.e. 'raw'
+    df = df.iloc[:1]
+
     return df
 
 """
@@ -141,4 +145,27 @@ def getMajorHolders(symbol):
     df['retailers'] =  1 - (df['promoters'] + df['institutions'])
     df = df[['promoters', 'institutions', 'retailers', 'institutionsCount']]
 
+    return df
+
+def getOptionsData(symbol, dataType):
+    optionsData = v7_options(symbol)
+    options = None
+    if dataType == 'calls':
+        options = optionsData['options'][0]['calls']
+    elif dataType == 'puts':
+        options = optionsData['options'][0]['puts']
+    elif dataType == 'dates':
+        options = optionsData['expirationDates']
+        options = epochToDatetimeList(options)
+    elif dataType == 'strikes':
+        options = optionsData['strikes']
+    elif dataType == 'quotes':
+        options = optionsData['quote']
+        df = pd.DataFrame(options, index=[0])
+        return df
+    else:
+        options = optionsData['options']
+        return pd.DataFrame()
+
+    df = pd.DataFrame(options)
     return df

@@ -6,7 +6,7 @@
     Started on 8th Nov'20
     last modified on 27/12/2020
 """
-from functions import getIncomeStatementHistory,  getAssetProfile,  getLivePriceData,  getMultiSymbolData, getHistoricPrices, getIncomeStatementsQtr, getBalanceSheetYearly, getBalanceSheetQtrly, getCashFlowsYearly, getCashFlowsQtrly, getFinancialAnalysisData, getMajorHolders
+from functions import getIncomeStatementHistory,  getAssetProfile,  getLivePriceData,  getMultiSymbolData, getHistoricPrices, getIncomeStatementsQtr, getBalanceSheetYearly, getBalanceSheetQtrly, getCashFlowsYearly, getCashFlowsQtrly, getFinancialAnalysisData, getMajorHolders, getOptionsData
 
 # Symbol class object
 class Symbol:
@@ -53,6 +53,9 @@ class Symbol:
     def history(self):
         return getHistoricPrices(self.symbol, self.start, self.end, self.period, self.interval)
 
+    def options(self, dataType='strikes'):
+        return getOptionsData(self.symbol, dataType)
+
 # Test!
 if __name__ == "__main__":
     #msft = Symbol('MSFT')
@@ -77,4 +80,9 @@ if __name__ == "__main__":
 
     tsla = Symbol('TSLA')
     #print(tsla.analysis())
-    print(tsla.shareholding())
+    #print(tsla.shareholding())
+    #tsla.livePriceData().to_csv('okokok.csv')
+    #print(tsla.livePriceData())
+
+    print(tsla.options('quotes'))
+    tsla.options('quotes').to_csv('okokok.csv')
