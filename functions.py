@@ -107,3 +107,7 @@ def getBalanceSheetYearly(symbol):
 def getBalanceSheetQtrly(symbol):
     bs = v10(symbol, 'balanceSheetHistoryQuarterly')['balanceSheetHistoryQuarterly']['balanceSheetStatements']
     return returnDf(bs)
+
+def getCashFlowsYearly(symbol):
+    cf = v10(symbol, 'cashflowStatementHistory')['cashflowStatementHistory']['cashflowStatements']
+    return returnDf(cf)

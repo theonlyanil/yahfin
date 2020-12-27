@@ -31,6 +31,7 @@ def formatColumns(df):
         else:
             df[col] = formatColumnCells(df[col], 'raw')
 
+    #df.to_csv('okokok.csv')
     return df
 
 """

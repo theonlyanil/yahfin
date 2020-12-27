@@ -44,8 +44,8 @@ def v8_range(symbol, range, interval):
     req = requests.get(url)
     jsonData = req.json()
 
-    # We'll need these two data points:
     try:
+        # We'll need these two data points:
         timestamps = jsonData['chart']['result'][0]['timestamp']
         priceData = jsonData['chart']['result'][0]['indicators']['quote'][0]
 
