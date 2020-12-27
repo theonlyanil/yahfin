@@ -111,3 +111,7 @@ def getBalanceSheetQtrly(symbol):
 def getCashFlowsYearly(symbol):
     cf = v10(symbol, 'cashflowStatementHistory')['cashflowStatementHistory']['cashflowStatements']
     return returnDf(cf)
+
+def getCashFlowsQtrly(symbol):
+    cf = v10(symbol, 'cashflowStatementHistoryQuarterly')['cashflowStatementHistoryQuarterly']['cashflowStatements']
+    return returnDf(cf)

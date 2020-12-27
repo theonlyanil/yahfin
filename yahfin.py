@@ -6,7 +6,7 @@
     Started on 8th Nov'20
     last modified on 27/12/2020
 """
-from functions import getIncomeStatementHistory,  getAssetProfile,  getLivePriceData,  getMultiSymbolData, getHistoricPrices, getIncomeStatementsQtr, getBalanceSheetYearly, getBalanceSheetQtrly, getCashFlowsYearly
+from functions import getIncomeStatementHistory,  getAssetProfile,  getLivePriceData,  getMultiSymbolData, getHistoricPrices, getIncomeStatementsQtr, getBalanceSheetYearly, getBalanceSheetQtrly, getCashFlowsYearly, getCashFlowsQtrly
 
 # Symbol class object
 class Symbol:
@@ -31,6 +31,9 @@ class Symbol:
 
     def cashFlows(self):
         return getCashFlowsYearly(self.symbol)
+
+    def cashFlowsQtr(self):
+        return getCashFlowsQtrly(self.symbol)
 
     def profile(self):
         return getAssetProfile(self.symbol)
@@ -64,4 +67,4 @@ if __name__ == "__main__":
     #print(tsla.balanceSheets())
 
     tsla = Symbol('TSLA')
-    print(tsla.cashFlows())
+    print(tsla.cashFlowsQtr())
