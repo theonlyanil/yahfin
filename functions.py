@@ -141,9 +141,12 @@ def getHistoricPrices(symbol, start_date, end_date, period):
     start = int(time.mktime(time.strptime(str(start_date), '%Y-%m-%d')))
     end = int(time.mktime(time.strptime(str(end_date), '%Y-%m-%d')))
 
+    print(f'start: {start}, end: {end}')
+
     data_lists = v8(symbol, start, end, period)
     timestamps = pd.DataFrame(epochToDatetimeList(data_lists[0]))
-    priceData = pd.DataFrame(data_lists[1])
+    priceData = pd.DataFrame(data_lists[1], columns=['open', 'high', 'low', 'close', 'volume'])
 
     final_df = timestamps.join(priceData)
+    final_df.columns = [['Datetime', 'Open', 'High', 'Low', 'Close', 'Volume']]
     return final_df
