@@ -34,7 +34,7 @@ def formatColumns(df):
 
 
 """
-    This was taking more lines of code in functins.py,
+    This was taking more lines of code in functions.py,
     so I added it as one function in utils.py to be accessed
     multiple times without writing the same lines again and again.
 """
@@ -42,7 +42,6 @@ def returnDf(dataFrame):
     df = pd.DataFrame(dataFrame)
     # Format cells
     df = formatColumns(df)
-    df.to_csv('okokok.csv')
     return df
 
 """
