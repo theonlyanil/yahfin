@@ -116,7 +116,7 @@ def v10(symbol, module):
     return data
 
 """ Yahoo Finance V8 Single Symbol Endpoint with start, end and interval """
-def v8(symbol, start_date, end_date, interval):
+def v8_period(symbol, start_date, end_date, interval):
     url = f'https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?period1={start_date}&period2={end_date}&interval={interval}'
     print(url)
     req = requests.get(url)
@@ -129,6 +129,23 @@ def v8(symbol, start_date, end_date, interval):
     # Returns a list of timestamps and priceData
     return [timestamps, priceData]
 
+""" Yahoo Finance V8 Single Symbol Endpoint with range and interval """
+def v8_range(symbol, range, interval):
+    url = f'https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?range={range}&interval={interval}'
+    print(url)
+    req = requests.get(url)
+    jsonData = req.json()
+
+    # We'll need these two data points:
+    try:
+        timestamps = jsonData['chart']['result'][0]['timestamp']
+        priceData = jsonData['chart']['result'][0]['indicators']['quote'][0]
+
+        # Returns a list of timestamps and priceData
+        return [timestamps, priceData]
+    except Exception as e:
+        return 'Please modify your period/interval'
+
 """
     It gets symbol's historic price data (open, high, low, close) with timestamps.
 
@@ -137,16 +154,24 @@ def v8(symbol, start_date, end_date, interval):
     It then calls v8 function (written in this module) and we convert timestamps
     and priceData into separate DataFrames and then we join both DFs and return.
 """
-def getHistoricPrices(symbol, start_date, end_date, period):
-    start = int(time.mktime(time.strptime(str(start_date), '%Y-%m-%d')))
-    end = int(time.mktime(time.strptime(str(end_date), '%Y-%m-%d')))
+def getHistoricPrices(symbol, start_date=None, end_date=None, period=None, interval=None):
+    data_lists = []
+    if start_date and end_date:
+        start = int(time.mktime(time.strptime(str(start_date), '%Y-%m-%d')))
+        end = int(time.mktime(time.strptime(str(end_date), '%Y-%m-%d')))
 
-    print(f'start: {start}, end: {end}')
+        print(f'start: {start}, end: {end}')
 
-    data_lists = v8(symbol, start, end, period)
-    timestamps = pd.DataFrame(epochToDatetimeList(data_lists[0]))
-    priceData = pd.DataFrame(data_lists[1], columns=['open', 'high', 'low', 'close', 'volume'])
+        data_lists = v8_period(symbol, start, end, interval)
+    else:
+        data_lists = v8_range(symbol, period, interval)
 
-    final_df = timestamps.join(priceData)
-    final_df.columns = [['Datetime', 'Open', 'High', 'Low', 'Close', 'Volume']]
-    return final_df
+    try:
+        timestamps = pd.DataFrame(epochToDatetimeList(data_lists[0]))
+        priceData = pd.DataFrame(data_lists[1], columns=['open', 'high', 'low', 'close', 'volume'])
+
+        final_df = timestamps.join(priceData)
+        final_df.columns = [['Datetime', 'Open', 'High', 'Low', 'Close', 'Volume']]
+        return final_df
+    except Exception as e:
+        return 'Please modify your period/interval'

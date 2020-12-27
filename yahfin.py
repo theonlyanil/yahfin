@@ -10,8 +10,12 @@ from functions import getIncomeStatementHistory,  getAssetProfile,  getLivePrice
 
 # Symbol class object
 class Symbol:
-    def __init__(self,  symbol):
+    def __init__(self,  symbol,  start=None, end=None, period='max', interval='1d'):
         self.symbol = symbol.upper()
+        self.start = start
+        self.end = end
+        self.period = period
+        self.interval = interval
 
     def incomeStatements(self):
         return getIncomeStatementHistory(self.symbol)
@@ -25,18 +29,15 @@ class Symbol:
     def multi(self):
         return getMultiSymbolData(self.symbol)
 
-class History:
-    def __init__(self, symbol, start, end, period):
-        self.symbol = symbol.upper()
-        self.start = start
-        self.end = end
-        self.period = period
-
-    def prices(self):
-        return getHistoricPrices(self.symbol, self.start, self.end, self.period)
+    def history(self):
+        return getHistoricPrices(self.symbol, self.start, self.end, self.period, self.interval)
 
 # Test!
 if __name__ == "__main__":
-    msft = History('TSLA', '2020-12-01', '2020-12-02', '1d')
+    #msft = Symbol('MSFT')
+    #print(msft.profile())
 
-    print(msft.prices())
+    msft = Symbol('TSLA', start='2020-12-01', end='2020-12-05')
+    #msft = Symbol('TSLA', start='2020-12-01', end='2020-12-02', interval='3m')
+    #msft = Symbol('TSLA')
+    print(msft.history())
