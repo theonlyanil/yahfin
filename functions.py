@@ -4,11 +4,19 @@ from utils import chunk_list, epochToDatetimeList, returnDf
 from engines import v8_period, v8_range, v7multi, v10, v7_options
 
 """ Gets a company's asset profile as in: address, summary, website, employees, etc. """
-def getAssetProfile(symbol):
+def getAssetProfile(symbol, kmp):
     asset_profile = v10(symbol, 'assetProfile')['assetProfile']
-    df = pd.DataFrame(asset_profile)
 
-    return df
+    # If user asks for kmp (key managerial personnel), return specific data
+    if kmp == 'kmp':
+        profile = asset_profile['companyOfficers']
+        df = pd.DataFrame(profile)
+        return df
+    else:
+        df = pd.DataFrame(asset_profile)
+        # Keep only the first row i.e. 'raw'
+        df = df.iloc[:1]
+        return df
 
 # To be modified
 def getLivePriceData(symbol):

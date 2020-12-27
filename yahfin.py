@@ -41,8 +41,8 @@ class Symbol:
     def shareholding(self):
         return getMajorHolders(self.symbol)
 
-    def profile(self):
-        return getAssetProfile(self.symbol)
+    def profile(self, kmp=''):
+        return getAssetProfile(self.symbol, kmp)
 
     def livePriceData(self):
         return getLivePriceData(self.symbol)
@@ -84,5 +84,8 @@ if __name__ == "__main__":
     #tsla.livePriceData().to_csv('okokok.csv')
     #print(tsla.livePriceData())
 
-    print(tsla.options('quotessd'))
-    tsla.options('quotes').to_csv('okokok.csv')
+    #print(tsla.options('quotessd'))
+    #tsla.options('quotes').to_csv('okokok.csv')
+
+    print(tsla.profile())
+    tsla.profile('kmp').to_csv("okok.csv")

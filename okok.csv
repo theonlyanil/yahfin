@@ -1,0 +1,11 @@
+,maxAge,name,age,title,yearBorn,fiscalYear,totalPay,exercisedValue,unexercisedValue
+0,1,Mr. Elon R. Musk,47.0,"Co-Founder, CEO & Director",1972.0,2019.0,"{'raw': 23760, 'fmt': '23.76k', 'longFmt': '23,760'}","{'raw': 0, 'fmt': None, 'longFmt': '0'}","{'raw': 0, 'fmt': None, 'longFmt': '0'}"
+1,1,Mr. Zachary J. Kirkhorn,34.0,Chief Financial Officer,1985.0,2019.0,"{'raw': 276058, 'fmt': '276.06k', 'longFmt': '276,058'}","{'raw': 0, 'fmt': None, 'longFmt': '0'}","{'raw': 4650676, 'fmt': '4.65M', 'longFmt': '4,650,676'}"
+2,1,Mr. Jerome  Guillen,46.0,Pres of Automotive Division,1973.0,2019.0,"{'raw': 301154, 'fmt': '301.15k', 'longFmt': '301,154'}","{'raw': 2559610, 'fmt': '2.56M', 'longFmt': '2,559,610'}","{'raw': 9999838, 'fmt': '10M', 'longFmt': '9,999,838'}"
+3,1,Mr. Andrew D. Baglino,38.0,Sr. VP of Powertrain & Energy Engineering,1981.0,2019.0,"{'raw': 301154, 'fmt': '301.15k', 'longFmt': '301,154'}","{'raw': 210349, 'fmt': '210.35k', 'longFmt': '210,349'}","{'raw': 4023224, 'fmt': '4.02M', 'longFmt': '4,023,224'}"
+4,1,Mr. Vaibhav  Taneja,41.0,Corp. Controller & Chief Accounting Officer,1978.0,,,"{'raw': 0, 'fmt': None, 'longFmt': '0'}","{'raw': 0, 'fmt': None, 'longFmt': '0'}"
+5,1,Mr. Martin  Viecha,,Sr. Director for Investor Relations,,,,"{'raw': 0, 'fmt': None, 'longFmt': '0'}","{'raw': 0, 'fmt': None, 'longFmt': '0'}"
+6,1,Al  Prescott,,VP of Legal,,,,"{'raw': 0, 'fmt': None, 'longFmt': '0'}","{'raw': 0, 'fmt': None, 'longFmt': '0'}"
+7,1,Mr. Dave  Arnold,,Sr. Director of Global Communications,,,,"{'raw': 0, 'fmt': None, 'longFmt': '0'}","{'raw': 0, 'fmt': None, 'longFmt': '0'}"
+8,1,Brian  Scelfo,,Sr. Director of Corp. Devel.,,,,"{'raw': 0, 'fmt': None, 'longFmt': '0'}","{'raw': 0, 'fmt': None, 'longFmt': '0'}"
+9,1,Mr. Jeffrey B. Straubel,43.0,Sr. Advisor,1976.0,2018.0,,"{'raw': 0, 'fmt': None, 'longFmt': '0'}","{'raw': 0, 'fmt': None, 'longFmt': '0'}"
