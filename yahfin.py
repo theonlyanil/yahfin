@@ -37,7 +37,10 @@ if __name__ == "__main__":
     #msft = Symbol('MSFT')
     #print(msft.profile())
 
-    msft = Symbol('TSLA', start='2020-12-01', end='2020-12-05')
+    #msft = Symbol('TSLA', start='2020-12-01', end='2020-12-05')
     #msft = Symbol('TSLA', start='2020-12-01', end='2020-12-02', interval='3m')
     #msft = Symbol('TSLA')
-    print(msft.history())
+    #print(msft.history())
+
+    symbols = Symbol('TSLA, MSFT, AAPL, GOOG')
+    print(symbols.multi()['marketCap'])
