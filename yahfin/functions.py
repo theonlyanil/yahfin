@@ -105,7 +105,7 @@ def getHistoricPrices(symbol, start_date=None, end_date=None, period=None, inter
         final_df.columns = [['Datetime', 'Open', 'High', 'Low', 'Close', 'Volume']]
         return final_df
     except Exception as e:
-        return 'Please modify your period/interval'
+        return 'func error: Please modify your period/interval'
 
 """This function takes in a symbol and gets the latest Income Statements from Yahoo Finance"""
 def getIncomeStatementHistory(symbol):

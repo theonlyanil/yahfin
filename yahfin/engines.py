@@ -62,4 +62,4 @@ def v8_range(symbol, range, interval):
         # Returns a list of timestamps and priceData
         return [timestamps, priceData, events]
     except Exception as e:
-        return 'Please modify your period/interval'
+        return 'engine error: Please modify your period/interval'

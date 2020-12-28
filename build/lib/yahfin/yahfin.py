@@ -6,17 +6,13 @@
     Started on 8th Nov'20
     last modified on 27/12/2020
 """
-from . functions import getIncomeStatementHistory,  getAssetProfile,  getLivePriceData,  getMultiSymbolData, getHistoricPrices, getIncomeStatementsQtr, getBalanceSheetYearly, getBalanceSheetQtrly, getCashFlowsYearly, getCashFlowsQtrly, getFinancialAnalysisData, getMajorHolders, getOptionsData
+from .functions import getIncomeStatementHistory,  getAssetProfile,  getLivePriceData,  getMultiSymbolData, getHistoricPrices, getIncomeStatementsQtr, getBalanceSheetYearly, getBalanceSheetQtrly, getCashFlowsYearly, getCashFlowsQtrly, getFinancialAnalysisData, getMajorHolders, getOptionsData
 
 # Symbol class object
 class Symbol:
-    def __init__(self,  symbol,  start=None, end=None, period='max', interval='1d'):
+    def __init__(self,  symbol):
         self.symbol = symbol.upper()
-        self.start = start
-        self.end = end
-        self.period = period
-        self.interval = interval
-
+        
     def incomeStatements(self):
         return getIncomeStatementHistory(self.symbol)
 
@@ -50,8 +46,8 @@ class Symbol:
     def multi(self):
         return getMultiSymbolData(self.symbol)
 
-    def history(self):
-        return getHistoricPrices(self.symbol, self.start, self.end, self.period, self.interval)
+    def history(self, start=None, end=None, period='max', interval='1d'):
+        return getHistoricPrices(self.symbol, start, end, period, interval)
 
     def options(self, dataType='calls'):
         return getOptionsData(self.symbol, dataType)

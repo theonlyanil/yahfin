@@ -1,8 +1,8 @@
 import pandas as pd
 import time
 
-from utils import chunk_list, epochToDatetimeList, returnDf, formatColumns
-from engines import v8_period, v8_range, v7multi, v10, v7_options
+from .utils import chunk_list, epochToDatetimeList, returnDf, formatColumns
+from .engines import v8_period, v8_range, v7multi, v10, v7_options
 
 """ Gets a company's asset profile as in: address, summary, website, employees, etc. """
 def getAssetProfile(symbol, kmp):
@@ -89,7 +89,7 @@ def getHistoricPrices(symbol, start_date=None, end_date=None, period=None, inter
         start = int(time.mktime(time.strptime(str(start_date), '%Y-%m-%d')))
         end = int(time.mktime(time.strptime(str(end_date), '%Y-%m-%d')))
 
-        print(f'start: {start}, end: {end}')
+        #print(f'start: {start}, end: {end}')
 
         data_lists = v8_period(symbol, start, end, interval)
     else:
@@ -105,7 +105,7 @@ def getHistoricPrices(symbol, start_date=None, end_date=None, period=None, inter
         final_df.columns = [['Datetime', 'Open', 'High', 'Low', 'Close', 'Volume']]
         return final_df
     except Exception as e:
-        return 'Please modify your period/interval'
+        return 'func error: Please modify your period/interval'
 
 """This function takes in a symbol and gets the latest Income Statements from Yahoo Finance"""
 def getIncomeStatementHistory(symbol):
