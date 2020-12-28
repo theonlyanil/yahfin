@@ -87,7 +87,7 @@ def getHistoricPrices(symbol, start_date=None, end_date=None, period=None, inter
     data_lists = []
     if start_date and end_date:
         start = int(time.mktime(time.strptime(str(start_date), '%Y-%m-%d')))
-        end = int(time.mktime(time.strptime(str(end_date), '%Y-%m-%d')))
+        end = int(time.mktime(time.strptime(str(end_date), '%Y-%m-%d'))) + 86400    #end is always +1day
 
         #print(f'start: {start}, end: {end}')
 

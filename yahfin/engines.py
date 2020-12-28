@@ -35,25 +35,15 @@ def v10(symbol, module):
 """ Yahoo Finance V8 Single Symbol Endpoint with start, end and interval """
 def v8_period(symbol, start_date, end_date, interval):
     url = f'{query2}/v8/finance/chart/{symbol}?period1={start_date}&period2={end_date}&interval={interval}'
-    #print(url)
-    req = requests.get(url)
-    jsonData = req.json()
-
-    try:
-        periodData = jsonData['chart']['result'][0]
-        # We'll need these two data points:
-        timestamps = periodData['timestamp']
-        priceData = periodData['indicators']['quote'][0]
-
-        # Returns a list of timestamps and priceData
-        return [timestamps, priceData]
-    except Exception as e:
-        errorData = jsonData['chart']['error']['description'].split('.')[1]
-        return errorData
+    return v8(url)
 
 """ Yahoo Finance V8 Single Symbol Endpoint with range and interval """
 def v8_range(symbol, range, interval):
     url = f'{query2}/v8/finance/chart/{symbol}?range={range}&interval={interval}&events=divsplit'
+    return v8(url)
+
+""" Yahoo Finance V8 """
+def v8(url):
     #print(url)
     req = requests.get(url)
     jsonData = req.json()
