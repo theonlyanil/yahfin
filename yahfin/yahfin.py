@@ -1,6 +1,6 @@
 """
     Yahoo Finance API Wrapper
-    v0.2.2
+    v0.2.9
 
     by Anil Sardiwal
     Started on 8th Nov'20
