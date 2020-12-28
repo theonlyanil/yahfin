@@ -40,11 +40,14 @@ def v8_period(symbol, start_date, end_date, interval):
     jsonData = req.json()
 
     # We'll need these two data points:
-    timestamps = jsonData['chart']['result'][0]['timestamp']
-    priceData = jsonData['chart']['result'][0]['indicators']['quote'][0]
+    try:
+        timestamps = jsonData['chart']['result'][0]['timestamp']
+        priceData = jsonData['chart']['result'][0]['indicators']['quote'][0]
 
-    # Returns a list of timestamps and priceData
-    return [timestamps, priceData]
+        # Returns a list of timestamps and priceData
+        return [timestamps, priceData]
+    except Exception as e:
+        return 'Supported Intervals: 1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo'
 
 """ Yahoo Finance V8 Single Symbol Endpoint with range and interval """
 def v8_range(symbol, range, interval):

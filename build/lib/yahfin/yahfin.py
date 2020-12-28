@@ -1,6 +1,6 @@
 """
     Yahoo Finance API Wrapper
-    v0.2
+    v0.2.1
 
     by Anil Sardiwal
     Started on 8th Nov'20
@@ -12,7 +12,7 @@ from .functions import getIncomeStatementHistory,  getAssetProfile,  getLivePric
 class Symbol:
     def __init__(self,  symbol):
         self.symbol = symbol.upper()
-        
+
     def incomeStatements(self):
         return getIncomeStatementHistory(self.symbol)
 
