@@ -1,0 +1,3 @@
+# YahFin 0.2 (Yahoo Finance Python Wrapper - Unofficial)
+
+Details to be updated soon...
