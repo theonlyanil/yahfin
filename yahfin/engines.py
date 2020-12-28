@@ -39,15 +39,17 @@ def v8_period(symbol, start_date, end_date, interval):
     req = requests.get(url)
     jsonData = req.json()
 
-    # We'll need these two data points:
     try:
-        timestamps = jsonData['chart']['result'][0]['timestamp']
-        priceData = jsonData['chart']['result'][0]['indicators']['quote'][0]
+        periodData = jsonData['chart']['result'][0]
+        # We'll need these two data points:
+        timestamps = periodData['timestamp']
+        priceData = periodData['indicators']['quote'][0]
 
         # Returns a list of timestamps and priceData
         return [timestamps, priceData]
     except Exception as e:
-        return 'Supported Intervals: 1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo'
+        errorData = jsonData['chart']['error']['description'].split('.')[1]
+        return errorData
 
 """ Yahoo Finance V8 Single Symbol Endpoint with range and interval """
 def v8_range(symbol, range, interval):
@@ -57,12 +59,14 @@ def v8_range(symbol, range, interval):
     jsonData = req.json()
 
     try:
-        # We'll need these two data points:
-        timestamps = jsonData['chart']['result'][0]['timestamp']
-        priceData = jsonData['chart']['result'][0]['indicators']['quote'][0]
-        events = jsonData['chart']['result'][0]['events']
+        rangeData = jsonData['chart']['result'][0]
+        # We'll need these three data points:
+        timestamps = rangeData['timestamp']
+        priceData = rangeData['indicators']['quote'][0]
+        #events = rangeData['events']
 
         # Returns a list of timestamps and priceData
-        return [timestamps, priceData, events]
+        return [timestamps, priceData]
     except Exception as e:
-        return 'engine error: Please modify your period/interval'
+        errorData = jsonData['chart']['error']['description'].split('.')[1]
+        return errorData
