@@ -6,7 +6,7 @@
     Started on 8th Nov'20
     last modified on 27/12/2020
 """
-from functions import getIncomeStatementHistory,  getAssetProfile,  getLivePriceData,  getMultiSymbolData, getHistoricPrices, getIncomeStatementsQtr, getBalanceSheetYearly, getBalanceSheetQtrly, getCashFlowsYearly, getCashFlowsQtrly, getFinancialAnalysisData, getMajorHolders, getOptionsData
+from .functions import getIncomeStatementHistory,  getAssetProfile,  getLivePriceData,  getMultiSymbolData, getHistoricPrices, getIncomeStatementsQtr, getBalanceSheetYearly, getBalanceSheetQtrly, getCashFlowsYearly, getCashFlowsQtrly, getFinancialAnalysisData, getMajorHolders, getOptionsData
 
 # Symbol class object
 class Symbol:
