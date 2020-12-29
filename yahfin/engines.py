@@ -24,15 +24,13 @@ def v7multi(symbols):
             errorData = jsonData['finance']['error']['description']
             return errorData
 
-
-
-
 """ Yahoo Finance V7 Options Endpoint """
 def v7_options(symbol):
     url = query1 + f'/v7/finance/options/{symbol}'
     req = requests.get(url)
     jsonData = req.json()
     optionData = jsonData['optionChain']['result'][0]
+    print(url)
     return optionData
 
 """ Yahoo Finance V10 Single Symbol Endpoint with Module(s) feature """
@@ -55,7 +53,7 @@ def v8_range(symbol, range, interval):
 
 """ Yahoo Finance V8 """
 def v8(url):
-    #print(url)
+    print(url)
     req = requests.get(url)
     jsonData = req.json()
 
