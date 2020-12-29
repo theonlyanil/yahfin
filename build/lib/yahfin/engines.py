@@ -9,7 +9,6 @@ query2 = 'https://query2.finance.yahoo.com'
 """ Yahoo Finance V7 Multi Endpoint """
 def v7multi(symbols):
     url = query2 + f"/v7/finance/quote?symbols={symbols}"
-    print(url)
     req = requests.get(url)
     jsonData = req.json()
     try:

@@ -1,6 +1,6 @@
 """
     Yahoo Finance API Wrapper
-    v0.3.0
+    v0.3.0.1
 
     by Anil Sardiwal
     Started on 8th Nov'20
@@ -62,7 +62,7 @@ if __name__ == "__main__":
     #msft = Symbol('TSLA', start='2020-12-01', end='2020-12-05')
     #msft = Symbol('TSLA', start='2020-12-01', end='2020-12-02', interval='3m')
     msft = Symbol('RCF.NS')
-    print(msft.history())
+    #print(msft.history())
     #msft.history().to_csv('okok.csv')
 
     #symbols = Symbol('TSLA, MSFT, AAPL, GOOG')
