@@ -1,10 +1,10 @@
 """
     Yahoo Finance API Wrapper
-    v0.2.9
+    v0.2.91
 
     by Anil Sardiwal
     Started on 8th Nov'20
-    last modified on 27/12/2020
+    last modified on 29/12/2020
 """
 from .functions import getIncomeStatementHistory,  getAssetProfile,  getLivePriceData,  getMultiSymbolData, getHistoricPrices, getIncomeStatementsQtr, getBalanceSheetYearly, getBalanceSheetQtrly, getCashFlowsYearly, getCashFlowsQtrly, getFinancialAnalysisData, getMajorHolders, getOptionsData
 

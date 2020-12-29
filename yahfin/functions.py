@@ -69,6 +69,9 @@ def getMultiSymbolData(symbols):
             base_df = base_df.append(v7multi(symbols))
     else:
         # convert list into a single String
+        if symbolSet[0] == '':
+            return 'No symbols were passed'
+
         symbols = ",".join(str(x) for x in symbolSet)
 
         # Run v7multi and get a DataFrame and append to base_df

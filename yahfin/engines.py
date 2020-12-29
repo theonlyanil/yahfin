@@ -9,12 +9,24 @@ query2 = 'https://query2.finance.yahoo.com'
 """ Yahoo Finance V7 Multi Endpoint """
 def v7multi(symbols):
     url = query2 + f"/v7/finance/quote?symbols={symbols}"
+    print(url)
     req = requests.get(url)
     jsonData = req.json()
-    multiData = jsonData['quoteResponse']['result']
-    df = pd.DataFrame(multiData)
-    df.set_index('symbol', inplace=True, drop=True)
-    return df
+    try:
+        multiData = jsonData['quoteResponse']['result']
+        df = pd.DataFrame(multiData)
+        df.set_index('symbol', inplace=True, drop=True)
+        return df
+    except Exception as e:
+        try:
+            errorData = jsonData['quoteResponse']['error']
+            return errorData
+        except Exception as e:
+            errorData = jsonData['finance']['error']['description']
+            return errorData
+
+
+
 
 """ Yahoo Finance V7 Options Endpoint """
 def v7_options(symbol):
