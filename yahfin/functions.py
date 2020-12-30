@@ -6,30 +6,39 @@ from .engines import v8_period, v8_range, v7multi, v10, v7_options
 
 """ Gets a company's asset profile as in: address, summary, website, employees, etc. """
 def getAssetProfile(symbol, kmp):
-    asset_profile = v10(symbol, 'assetProfile')['assetProfile']
+    try:
+        asset_profile = v10(symbol, 'assetProfile')['assetProfile']
 
-    # If user asks for kmp (key managerial personnel), return specific data
-    if kmp == 'kmp':
-        profile = asset_profile['companyOfficers']
-        df = pd.DataFrame(profile)
+        # If user asks for kmp (key managerial personnel), return specific data
+        if kmp == 'kmp':
+            profile = asset_profile['companyOfficers']
+            df = pd.DataFrame(profile)
 
-        # formatColumns(df) because some values have options for 'raw' and 'fmt'.
-        return formatColumns(df)
-    else:
-        df = pd.DataFrame(asset_profile)
-        # Keep only the first row i.e. 'raw'
-        df = df.iloc[:1]
-        return df
+            # formatColumns(df) because some values have options for 'raw' and 'fmt'.
+            return formatColumns(df)
+        else:
+            df = pd.DataFrame(asset_profile)
+            # Keep only the first row i.e. 'raw'
+            df = df.iloc[:1]
+            return df
+    except Exception as e:
+        error = v10(symbol, 'incomeStatementHistory')
+        return error  
+
 
 # To be modified
 def getLivePriceData(symbol):
-    price_data = v10(symbol, 'price')['price']
-    df = pd.DataFrame(price_data)
+    try:
+        price_data = v10(symbol, 'price')['price']
+        df = pd.DataFrame(price_data)
 
-    # Keep only the first row i.e. 'raw'
-    df = df.iloc[:1]
+        # Keep only the first row i.e. 'raw'
+        df = df.iloc[:1]
+        return df
+    except Exception as e:
+        error = v10(symbol, 'incomeStatementHistory')
+        return error
 
-    return df
 
 """
     This function returns data for multiple symbols in one go
@@ -92,8 +101,6 @@ def getHistoricPrices(symbol, start_date=None, end_date=None, period=None, inter
         start = int(time.mktime(time.strptime(str(start_date), '%Y-%m-%d')))
         end = int(time.mktime(time.strptime(str(end_date), '%Y-%m-%d'))) + 86400    #end is always +1day
 
-        #print(f'start: {start}, end: {end}')
-
         data_lists = v8_period(symbol, start, end, interval)
     else:
         data_lists = v8_range(symbol, period, interval)
@@ -112,60 +119,99 @@ def getHistoricPrices(symbol, start_date=None, end_date=None, period=None, inter
 
 """This function takes in a symbol and gets the latest Income Statements from Yahoo Finance"""
 def getIncomeStatementHistory(symbol):
-    income_statements = v10(symbol, 'incomeStatementHistory')['incomeStatementHistory']['incomeStatementHistory']
-    return returnDf(income_statements)
+    try:
+        income_statements = v10(symbol, 'incomeStatementHistory')['incomeStatementHistory']['incomeStatementHistory']
+        return returnDf(income_statements)
+    except Exception as e:
+        error = v10(symbol, 'incomeStatementHistory')
+        return error
+
 
 """This function takes in a symbol and gets the latest Income Statements (Qtrly) from Yahoo Finance"""
 def getIncomeStatementsQtr(symbol):
-    income_statements = v10(symbol, 'incomeStatementHistoryQuarterly')['incomeStatementHistoryQuarterly']['incomeStatementHistory']
-    return returnDf(income_statements)
+    try:
+        income_statements = v10(symbol, 'incomeStatementHistoryQuarterly')['incomeStatementHistoryQuarterly']['incomeStatementHistory']
+        return returnDf(income_statements)
+    except Exception as e:
+        error = v10(symbol, 'incomeStatementHistoryQuarterly')
+        return error
+
 
 def getBalanceSheetYearly(symbol):
-    bs = v10(symbol, 'balanceSheetHistory')['balanceSheetHistory']['balanceSheetStatements']
-    return returnDf(bs)
+    try:
+        bs = v10(symbol, 'balanceSheetHistory')['balanceSheetHistory']['balanceSheetStatements']
+        return returnDf(bs)
+    except Exception as e:
+        error = v10(symbol, 'balanceSheetHistory')
+        return error
+
 
 def getBalanceSheetQtrly(symbol):
-    bs = v10(symbol, 'balanceSheetHistoryQuarterly')['balanceSheetHistoryQuarterly']['balanceSheetStatements']
-    return returnDf(bs)
+    try:
+        bs = v10(symbol, 'balanceSheetHistoryQuarterly')['balanceSheetHistoryQuarterly']['balanceSheetStatements']
+        return returnDf(bs)
+    except Exception as e:
+        error = v10(symbol, 'balanceSheetHistoryQuarterly')
+        return error
+
 
 def getCashFlowsYearly(symbol):
-    cf = v10(symbol, 'cashflowStatementHistory')['cashflowStatementHistory']['cashflowStatements']
-    return returnDf(cf)
+    try:
+        cf = v10(symbol, 'cashflowStatementHistory')['cashflowStatementHistory']['cashflowStatements']
+        return returnDf(cf)
+    except Exception as e:
+        error = v10(symbol, 'cashflowStatementHistory')
+        return error
+
 
 def getCashFlowsQtrly(symbol):
-    cf = v10(symbol, 'cashflowStatementHistoryQuarterly')['cashflowStatementHistoryQuarterly']['cashflowStatements']
-    return returnDf(cf)
+    try:
+        cf = v10(symbol, 'cashflowStatementHistoryQuarterly')['cashflowStatementHistoryQuarterly']['cashflowStatements']
+        return returnDf(cf)
+    except Exception as e:
+        error = v10(symbol, 'cashflowStatementHistory')
+        return error
+
 
 def getFinancialAnalysisData(symbol):
-    analysisData = v10(symbol, 'financialData')['financialData']
-    df = pd.DataFrame(analysisData)
+    try:
+        analysisData = v10(symbol, 'financialData')['financialData']
+        df = pd.DataFrame(analysisData)
 
-    # Keep only the first row i.e. 'raw'
-    df = df.iloc[:1]
-    return df
+        # Keep only the first row i.e. 'raw'
+        df = df.iloc[:1]
+        return df
+    except Exception as e:
+        error = v10(symbol, 'cashflowStatementHistory')
+        return error
 
 """
     Returns Major Shareholders' percentage share by company's Symbol.
     New: Added retailers' shareholding.
 """
 def getMajorHolders(symbol):
-    holders = v10(symbol, 'majorHoldersBreakdown')['majorHoldersBreakdown']
-    df = pd.DataFrame(holders)
+    try:
+        holders = v10(symbol, 'majorHoldersBreakdown')['majorHoldersBreakdown']
+        df = pd.DataFrame(holders)
 
-    # Keep only the first row i.e. 'raw'
-    df = df.iloc[:1]
+        # Keep only the first row i.e. 'raw'
+        df = df.iloc[:1]
 
-    # renaming columns
-    df = df.rename(columns={"insidersPercentHeld": "promoters", "institutionsFloatPercentHeld": "institutions"})
+        # renaming columns
+        df = df.rename(columns={"insidersPercentHeld": "promoters", "institutionsFloatPercentHeld": "institutions"})
 
-    pd.to_numeric(df['promoters'])
-    pd.to_numeric(df['institutions'])
+        pd.to_numeric(df['promoters'])
+        pd.to_numeric(df['institutions'])
 
-    # creating a new column: 'retailers': {1 - (promoters + institutions)}
-    df['retailers'] =  1 - (df['promoters'] + df['institutions'])
-    df = df[['promoters', 'institutions', 'retailers', 'institutionsCount']]
+        # creating a new column: 'retailers': {1 - (promoters + institutions)}
+        df['retailers'] =  1 - (df['promoters'] + df['institutions'])
+        df = df[['promoters', 'institutions', 'retailers', 'institutionsCount']]
 
-    return df
+        return df
+    except Exception as e:
+        error = v10(symbol, 'majorHoldersBreakdown')
+        return error
+
 
 """
     This function gets options data of a given symbol. Probably only available for US stocks.

@@ -37,9 +37,13 @@ def v7_options(symbol):
 def v10(symbol, module):
     url = query2 + f'/v10/finance/quoteSummary/{symbol}?modules={module}'
     req = requests.get(url)
-    jsonData = req.json()
-    data = jsonData['quoteSummary']['result'][0]
-    return data
+    try:
+        jsonData = req.json()
+        data = jsonData['quoteSummary']['result'][0]
+        return data
+    except Exception as e:
+        return 'Something went wrong. Please recheck the symbol.'
+
 
 """ Yahoo Finance V8 Single Symbol Endpoint with start, end and interval """
 def v8_period(symbol, start_date, end_date, interval):
