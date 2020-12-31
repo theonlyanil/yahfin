@@ -1,10 +1,10 @@
 """
     Yahoo Finance API Wrapper
-    v0.3.0.1
+    v0.3.1
 
     by Anil Sardiwal
     Started on 8th Nov'20
-    last modified on 29/12/2020
+    last modified on 31/12/2020
 """
 from .functions import getIncomeStatementHistory,  getAssetProfile,  getLivePriceData,  getMultiSymbolData, getHistoricPrices, getIncomeStatementsQtr, getBalanceSheetYearly, getBalanceSheetQtrly, getCashFlowsYearly, getCashFlowsQtrly, getFinancialAnalysisData, getMajorHolders, getOptionsData
 
@@ -59,34 +59,12 @@ if __name__ == "__main__":
     #msft = Symbol('MSFT')
     #print(msft.profile())
 
-    #msft = Symbol('TSLA', start='2020-12-01', end='2020-12-05')
-    #msft = Symbol('TSLA', start='2020-12-01', end='2020-12-02', interval='3m')
     msft = Symbol('RCF.NS')
     #print(msft.history())
-    #msft.history().to_csv('okok.csv')
 
     #symbols = Symbol('TSLA, MSFT, AAPL, GOOG')
-    #print(symbols.multi()['marketCap'])
 
-    #tsla = Symbol('TSLA')
-    #print(tsla.incomeStatementsQtr())
-
-    #tsla = Symbol('TSLA')
-    #print(tsla.balanceSheets())
-
-    #tsla = Symbol('TSLA')
-    #print(tsla.cashFlowsQtr())
-
-
-    #print(tsla.analysis())
-    #print(tsla.shareholding())
     #tsla.livePriceData().to_csv('okokok.csv')
-    #print(tsla.livePriceData())
-
-    #print(tsla.options('quotessd'))
     #tsla.options('quotes').to_csv('okokok.csv')
 
-    #print(tsla.profile())
     #tsla.profile('kmp').to_csv("okok.csv")
-
-    #print(multi.multi())

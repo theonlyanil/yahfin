@@ -1,3 +1,4 @@
+#from yahfin import yahfin as yf
 
 us_symbol = yf.Symbol('AAPL')
 in_symbol = yf.Symbol('RELIANCE.NS')

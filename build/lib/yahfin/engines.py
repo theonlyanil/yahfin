@@ -24,24 +24,26 @@ def v7multi(symbols):
             errorData = jsonData['finance']['error']['description']
             return errorData
 
-
-
-
 """ Yahoo Finance V7 Options Endpoint """
 def v7_options(symbol):
     url = query1 + f'/v7/finance/options/{symbol}'
     req = requests.get(url)
     jsonData = req.json()
     optionData = jsonData['optionChain']['result'][0]
+    print(url)
     return optionData
 
 """ Yahoo Finance V10 Single Symbol Endpoint with Module(s) feature """
 def v10(symbol, module):
     url = query2 + f'/v10/finance/quoteSummary/{symbol}?modules={module}'
     req = requests.get(url)
-    jsonData = req.json()
-    data = jsonData['quoteSummary']['result'][0]
-    return data
+    try:
+        jsonData = req.json()
+        data = jsonData['quoteSummary']['result'][0]
+        return data
+    except Exception as e:
+        return 'Something went wrong. Please recheck the symbol.'
+
 
 """ Yahoo Finance V8 Single Symbol Endpoint with start, end and interval """
 def v8_period(symbol, start_date, end_date, interval):
@@ -55,7 +57,7 @@ def v8_range(symbol, range, interval):
 
 """ Yahoo Finance V8 """
 def v8(url):
-    #print(url)
+    print(url)
     req = requests.get(url)
     jsonData = req.json()
 
