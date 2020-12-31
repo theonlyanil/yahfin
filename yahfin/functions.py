@@ -83,6 +83,7 @@ def getMultiSymbolData(symbols):
 
         # Run v7multi and get a DataFrame and append to base_df
         base_df = base_df.append(v7multi(symbols))
+
     return base_df
 
 """
@@ -110,7 +111,8 @@ def getHistoricPrices(symbol, start_date=None, end_date=None, period=None, inter
         # Join both DFs
         final_df = timestamps.join(priceData)
 
-        final_df.columns = [['Datetime', 'Open', 'High', 'Low', 'Close', 'Volume']]
+        final_df.columns = ['Datetime', 'Open', 'High', 'Low', 'Close', 'Volume']
+
         return final_df
     except Exception as e:
         return data_lists
