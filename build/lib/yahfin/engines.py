@@ -30,7 +30,7 @@ def v7_options(symbol):
     req = requests.get(url)
     jsonData = req.json()
     optionData = jsonData['optionChain']['result'][0]
-    print(url)
+    #print(url)
     return optionData
 
 """ Yahoo Finance V10 Single Symbol Endpoint with Module(s) feature """
@@ -57,7 +57,7 @@ def v8_range(symbol, range, interval):
 
 """ Yahoo Finance V8 """
 def v8(url):
-    print(url)
+    #print(url)
     req = requests.get(url)
     jsonData = req.json()
 
@@ -71,5 +71,5 @@ def v8(url):
         # Returns a list of timestamps and priceData
         return [timestamps, priceData]
     except Exception as e:
-        errorData = jsonData['chart']['error']['description'].split('.')[1]
+        errorData = jsonData['chart']['error']['description']
         return errorData
