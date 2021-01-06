@@ -35,7 +35,7 @@ def getLivePriceData(symbol):
 
         # Keep only the first row i.e. 'raw'
         df = df.iloc[:1]
-        return df
+        return df.to_dict('records')[0] # return as a dict
     except Exception as e:
         error = v10(symbol, 'incomeStatementHistory')
         return error
