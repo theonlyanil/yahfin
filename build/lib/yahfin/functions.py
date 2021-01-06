@@ -21,7 +21,7 @@ def getAssetProfile(symbol, kmp):
             df = pd.DataFrame(asset_profile)
             # Keep only the first row i.e. 'raw'
             df = df.iloc[:1]
-            return df
+            return df.to_dict('records')[0] # return as a dict
     except Exception as e:
         error = v10(symbol, 'incomeStatementHistory')
         return error
@@ -35,7 +35,7 @@ def getLivePriceData(symbol):
 
         # Keep only the first row i.e. 'raw'
         df = df.iloc[:1]
-        return df
+        return df.to_dict('records')[0] # return as a dict
     except Exception as e:
         error = v10(symbol, 'incomeStatementHistory')
         return error
@@ -180,7 +180,7 @@ def getFinancialAnalysisData(symbol):
 
         # Keep only the first row i.e. 'raw'
         df = df.iloc[:1]
-        return df
+        return df.to_dict('records')[0] # return as a dict
     except Exception as e:
         error = v10(symbol, 'cashflowStatementHistory')
         return error
@@ -207,7 +207,7 @@ def getMajorHolders(symbol):
         df['retailers'] =  1 - (df['promoters'] + df['institutions'])
         df = df[['promoters', 'institutions', 'retailers', 'institutionsCount']]
 
-        return df
+        return df.to_dict('records')[0] # return as a dict
     except Exception as e:
         error = v10(symbol, 'majorHoldersBreakdown')
         return error
@@ -222,23 +222,26 @@ def getOptionsData(symbol, dataType):
     optionsData = v7_options(symbol)
     options = None
 
-    if dataType == 'calls':
-        options = optionsData['options'][0]['calls']
-    elif dataType == 'puts':
-        options = optionsData['options'][0]['puts']
-    elif dataType == 'dates':
-        options = optionsData['expirationDates']
-        options = epochToDatetimeList(options)  #because timestamps are unreadable in raw format
-    elif dataType == 'strikes':
-        options = optionsData['strikes']
-    elif dataType == 'quotes':
-        options = optionsData['quote']
-        # Passes scaler values, so had to pass an index and return function from here.
-        df = pd.DataFrame(options, index=[0])
-        return df
-    else:
-        # Wrong dataType, empty dataFrame is returned.
-        return pd.DataFrame()
+    try:
+        if dataType == 'calls':
+            options = optionsData['options'][0]['calls']
+        elif dataType == 'puts':
+            options = optionsData['options'][0]['puts']
+        elif dataType == 'dates':
+            options = optionsData['expirationDates']
+            options = epochToDatetimeList(options)  #because timestamps are unreadable in raw format
+        elif dataType == 'strikes':
+            options = optionsData['strikes']
+        elif dataType == 'quotes':
+            options = optionsData['quote']
+            # Passes scaler values, so had to pass an index and return function from here.
+            df = pd.DataFrame(options, index=[0])
+            return df.to_dict('records')[0] # return as a dict
+        else:
+            # Wrong dataType, empty dataFrame is returned.
+            return pd.DataFrame()
 
-    df = pd.DataFrame(options)
-    return df
+        df = pd.DataFrame(options)
+        return df
+    except Exception as e:
+        return []
