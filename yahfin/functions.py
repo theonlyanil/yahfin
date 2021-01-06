@@ -1,5 +1,6 @@
 import pandas as pd
 import time
+import pdb
 
 from .utils import chunk_list, epochToDatetimeList, returnDf, formatColumns
 from .engines import v8_period, v8_range, v7multi, v10, v7_options
@@ -23,7 +24,7 @@ def getAssetProfile(symbol, kmp):
             return df
     except Exception as e:
         error = v10(symbol, 'incomeStatementHistory')
-        return error  
+        return error
 
 
 # To be modified
@@ -54,14 +55,11 @@ def getMultiSymbolData(symbols):
 
     # first remove spaces, if any
     symbols = symbols.replace(" ", "")
-
-    # Extract every symbol separated by comma and store in a set (unique values)
+    # Extract every symbol separated by comma and this makes a list
     symbolss = symbols.split(',')
-    symbolSet = set()
-    for symbol in symbolss:
-        symbolSet.add(symbol)
 
-    symbolSet = sorted(symbolSet) # sort the list
+    # Filter list(symbolss) to drop '' and make a set (unique vals) and sort it
+    symbolSet = sorted(set(filter(None, symbolss)))
 
     # if symbolSet length is  more than 100, split it into multiples of 100, and
     # find values and attach to one DataFrame
@@ -85,6 +83,7 @@ def getMultiSymbolData(symbols):
 
         # Run v7multi and get a DataFrame and append to base_df
         base_df = base_df.append(v7multi(symbols))
+
     return base_df
 
 """
@@ -112,7 +111,8 @@ def getHistoricPrices(symbol, start_date=None, end_date=None, period=None, inter
         # Join both DFs
         final_df = timestamps.join(priceData)
 
-        final_df.columns = [['Datetime', 'Open', 'High', 'Low', 'Close', 'Volume']]
+        final_df.columns = ['Datetime', 'Open', 'High', 'Low', 'Close', 'Volume']
+
         return final_df
     except Exception as e:
         return data_lists
@@ -214,6 +214,7 @@ def getMajorHolders(symbol):
 
 
 """
+    # TODO: add try/except
     This function gets options data of a given symbol. Probably only available for US stocks.
     Also takes in an input of dataType i.e. calls, puts, dates, strikes, quotes
 """
