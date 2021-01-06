@@ -207,7 +207,7 @@ def getMajorHolders(symbol):
         df['retailers'] =  1 - (df['promoters'] + df['institutions'])
         df = df[['promoters', 'institutions', 'retailers', 'institutionsCount']]
 
-        return df
+        return df.to_dict('records')[0] # return as a dict
     except Exception as e:
         error = v10(symbol, 'majorHoldersBreakdown')
         return error
