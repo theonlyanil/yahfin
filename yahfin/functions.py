@@ -180,7 +180,7 @@ def getFinancialAnalysisData(symbol):
 
         # Keep only the first row i.e. 'raw'
         df = df.iloc[:1]
-        return df
+        return df.to_dict('records')[0] # return as a dict
     except Exception as e:
         error = v10(symbol, 'cashflowStatementHistory')
         return error
@@ -236,7 +236,7 @@ def getOptionsData(symbol, dataType):
             options = optionsData['quote']
             # Passes scaler values, so had to pass an index and return function from here.
             df = pd.DataFrame(options, index=[0])
-            return df
+            return df.to_dict('records')[0] # return as a dict
         else:
             # Wrong dataType, empty dataFrame is returned.
             return pd.DataFrame()

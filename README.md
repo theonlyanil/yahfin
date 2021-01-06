@@ -58,7 +58,33 @@ The Ultimate Yahoo Finance Python module you'll ever need.
   #valid intervals: 1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo
 
   # Options Data
-  tsla.options()
+  tsla.options('calls')
+  tsla.options('puts')
+  tsla.options('dates')
+  tsla.options('strikes')
+  tsla.options('quotes')
 
+  # Analysis Data
+  tsla.analysis()
 
+  
+```
+
+### Fundamental Data
+```
+  from yahfin import yahfin as yf
+
+  tsla = yf.Symbol('tsla')
+
+  # Balance Sheets
+  tsla.balanceSheets()
+  tsla.balanceSheetsQtr()
+
+  # Profile and Loss Statements
+  tsla.incomeStatements()
+  tsla.incomeStatementsQtr()
+
+  # Cash Flow Statements
+  tsla.cashFlows()
+  tsla.cashFlowsQtr()
 ```
