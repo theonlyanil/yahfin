@@ -46,5 +46,19 @@ The Ultimate Yahoo Finance Python module you'll ever need.
   tsla.profile('kmp')
 
   # Live Price Data
-  tsla.
+  tsla.livePriceData()
+
+  # Historical Prices
+  tsla.history()  # defaults: period=max, interval=1d
+  tsla.history(start='2021-01-01', end='2021-01-05')
+  tsla.history(period='1y')
+  tsla.history(period='5d', interval='1m')
+
+  #valid periods: 1d,5d,1mo,3mo,6mo,1y,2y,5y,10y,ytd,max
+  #valid intervals: 1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo
+
+  # Options Data
+  tsla.options()
+
+
 ```
