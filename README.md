@@ -67,7 +67,29 @@ The Ultimate Yahoo Finance Python module you'll ever need.
   # Analysis Data
   tsla.analysis()
 
-  
+  # Shareholding Data
+  tsla.shareholding()
+
+```
+
+### Multi Symbol Data
+```
+  from yahfin import yahfin as yf
+
+  multiSymbols = yf.Symbol('TSLA, AAPL, GOOG, FB, RELIANCE.NS')
+
+  # All data at once
+  m = multiSymbols.multi()
+
+  # dataPoints of all symbols
+  prices = m['regularMarketPrice']
+  marketCaps = m['marketCap']
+
+  # Individual Data
+  aapl_price = prices['AAPL']
+
+  # Note: The best thing is that it also works with single symbol.
+
 ```
 
 ### Fundamental Data
@@ -88,3 +110,7 @@ The Ultimate Yahoo Finance Python module you'll ever need.
   tsla.cashFlows()
   tsla.cashFlowsQtr()
 ```
+
+### Requirements
+ - Python >= 3.7.x
+ - Pandas
