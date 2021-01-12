@@ -14,7 +14,8 @@ def v7multi(symbols):
     try:
         multiData = jsonData['quoteResponse']['result']
         df = pd.DataFrame(multiData)
-        df.set_index('symbol', inplace=True, drop=True)
+        df = df[['symbol', 'language', 'region', 'quoteType', 'quoteSourceName', 'triggerable', 'currency', 'exchange', 'shortName', 'longName', 'messageBoardId', 'exchangeTimezoneName', 'exchangeTimezoneShortName', 'gmtOffSetMilliseconds', 'market', 'esgPopulated', 'tradeable', 'marketState', 'averageDailyVolume10Day', 'fiftyTwoWeekLowChange', 'fiftyTwoWeekLowChangePercent', 'fiftyTwoWeekRange', 'fiftyTwoWeekHighChange', 'fiftyTwoWeekHighChangePercent', 'fiftyTwoWeekLow', 'fiftyTwoWeekHigh', 'earningsTimestamp', 'earningsTimestampStart', 'earningsTimestampEnd', 'trailingAnnualDividendRate', 'trailingPE', 'trailingAnnualDividendYield', 'epsTrailingTwelveMonths', 'epsForward', 'sharesOutstanding', 'bookValue', 'fiftyDayAverage', 'fiftyDayAverageChange', 'fiftyDayAverageChangePercent', 'twoHundredDayAverage', 'twoHundredDayAverageChange', 'twoHundredDayAverageChangePercent', 'marketCap', 'forwardPE', 'priceToBook', 'sourceInterval', 'exchangeDataDelayedBy', 'firstTradeDateMilliseconds', 'priceHint', 'regularMarketChange', 'regularMarketChangePercent', 'regularMarketTime', 'regularMarketPrice', 'regularMarketDayHigh', 'regularMarketDayRange', 'regularMarketDayLow', 'regularMarketVolume', 'regularMarketPreviousClose', 'bid', 'ask', 'bidSize', 'askSize', 'fullExchangeName', 'financialCurrency', 'regularMarketOpen', 'averageDailyVolume3Month']]
+        #df.set_index('symbol', inplace=True, drop=True)
         return df
     except Exception as e:
         try:
