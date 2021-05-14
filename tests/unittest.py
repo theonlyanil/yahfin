@@ -1,4 +1,4 @@
-import yahfin as yf
+import yahfin as yf #works when yahfin is not installed
 
 us_symbol = yf.Symbol('AAPL')
 in_symbol = yf.Symbol('RELIANCE.NS')
