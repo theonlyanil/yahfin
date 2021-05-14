@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="yahfin", # Replace with your own username
-    version="0.3.5",
+    version="0.3.6",
     author="Anil Sardiwal",
     author_email="theonlyanil@gmail.com",
     description="Yahoo Finance Python Wrapper (Unofficial)",
