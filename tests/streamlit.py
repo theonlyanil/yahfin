@@ -1,9 +1,7 @@
 import streamlit as st
-import numpy as np
-import time
 
 st.title('Yahfin Interactive')
-
+st.write('Project Page: https://pypi.org/project/yahfin/')
 
 appSelect = st.sidebar.radio(
     "Select Main Feature",
