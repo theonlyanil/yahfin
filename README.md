@@ -2,6 +2,8 @@
 
 The Ultimate Yahoo Finance Python module you'll ever need.
 > I was using the other yahoo finance library but it was fetching some of the data through web scrapping which was slow and some of its features didn't work at all.
+
+## Try
 > Try it before using it: https://share.streamlit.io/theonlyanil/yahfin-interactive/main/streamlit.py
 
 ### Features:
