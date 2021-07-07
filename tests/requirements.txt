@@ -1,2 +1,0 @@
-yahfin==0.3.6
-streamlit==0.82.0
