@@ -115,6 +115,6 @@ The Ultimate Yahoo Finance Python module you'll ever need.
 ```
 
 ### Requirements
- - Python >= 3.7.x
+ - Python >= 3.x.x
  - requests
  - Pandas

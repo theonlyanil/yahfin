@@ -1,5 +1,7 @@
 README.md
 setup.py
+tests/__init__.py
+tests/unittest.py
 yahfin/__init__.py
 yahfin/engines.py
 yahfin/functions.py

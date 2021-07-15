@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: yahfin
-Version: 0.3.6
+Version: 0.3.7
 Summary: Yahoo Finance Python Wrapper (Unofficial)
 Home-page: https://github.com/theonlyanil/yahfin
 Author: Anil Sardiwal
@@ -10,6 +10,9 @@ Description: # YahFin 0.3.x (Yahoo Finance Python Wrapper - Unofficial)
         
         The Ultimate Yahoo Finance Python module you'll ever need.
         > I was using the other yahoo finance library but it was fetching some of the data through web scrapping which was slow and some of its features didn't work at all.
+        
+        ## Try
+        > Try it before using it: https://share.streamlit.io/theonlyanil/yahfin-interactive/main/streamlit.py
         
         ### Features:
         - Live Price Data
@@ -120,7 +123,8 @@ Description: # YahFin 0.3.x (Yahoo Finance Python Wrapper - Unofficial)
         ```
         
         ### Requirements
-         - Python >= 3.7.x
+         - Python >= 3.x.x
+         - requests
          - Pandas
         
 Platform: UNKNOWN
