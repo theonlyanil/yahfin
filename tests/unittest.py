@@ -1,16 +1,22 @@
-from .. import yahfin as yf #works when yahfin is not installed
+# For relative imports to work
+import sys
+
+sys.path.append("..")
+from yahfin import yahfin as yf #works when yahfin is not installed
 
 us_symbol = yf.Symbol('AAPL')
 in_symbol = yf.Symbol('RELIANCE.NS')
 
 # Test Options Data
-opt_us = us_symbol.options()
-opt_in = in_symbol.options()
+#opt_us = us_symbol.options()
+#opt_in = in_symbol.options()
 
-print(opt_in)
-print(opt_us)
+#print(opt_in)
+#print(opt_us)
 
-"""
+print(us_symbol.incomeStatements())
+
+
 def incomeStatements(self):
     return getIncomeStatementHistory(self.symbol)
 
@@ -49,4 +55,3 @@ def history(self, start=None, end=None, period='max', interval='1d'):
 
 def options(self, dataType='calls'):
     return getOptionsData(self.symbol, dataType)
-"""
