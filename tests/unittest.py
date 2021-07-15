@@ -7,51 +7,32 @@ from yahfin import yahfin as yf #works when yahfin is not installed
 us_symbol = yf.Symbol('AAPL')
 in_symbol = yf.Symbol('RELIANCE.NS')
 
-# Test Options Data
-#opt_us = us_symbol.options()
-#opt_in = in_symbol.options()
+"""
+    Single Symbol Testing
+"""
+# Get Company Profile
+print(us_symbol.profile())
 
-#print(opt_in)
-#print(opt_us)
+"""
+# Get Company's Key Managerial Personnel Info
+us_symbol.profile('kmp')
 
-print(us_symbol.incomeStatements())
+# Live Price Data
+us_symbol.livePriceData()
 
+# Historical Prices
+us_symbol.history()
 
-def incomeStatements(self):
-    return getIncomeStatementHistory(self.symbol)
+# Options Data
+us_symbol.options('calls')
+us_symbol.options('puts')
+us_symbol.options('dates')
+us_symbol.options('strikes')
+us_symbol.options('quotes')
 
-def incomeStatementsQtr(self):
-    return getIncomeStatementsQtr(self.symbol)
+# Analysis Data
+us_symbol.analysis()
 
-def balanceSheets(self):
-    return getBalanceSheetYearly(self.symbol)
-
-def balanceSheetsQtr(self):
-    return getBalanceSheetQtrly(self.symbol)
-
-def cashFlows(self):
-    return getCashFlowsYearly(self.symbol)
-
-def cashFlowsQtr(self):
-    return getCashFlowsQtrly(self.symbol)
-
-def analysis(self):
-    return getFinancialAnalysisData(self.symbol)
-
-def shareholding(self):
-    return getMajorHolders(self.symbol)
-
-def profile(self, kmp=''):
-    return getAssetProfile(self.symbol, kmp)
-
-def livePriceData(self):
-    return getLivePriceData(self.symbol)
-
-def multi(self):
-    return getMultiSymbolData(self.symbol)
-
-def history(self, start=None, end=None, period='max', interval='1d'):
-    return getHistoricPrices(self.symbol, start, end, period, interval)
-
-def options(self, dataType='calls'):
-    return getOptionsData(self.symbol, dataType)
+# Shareholding Data
+us_symbol.shareholding()
+"""
