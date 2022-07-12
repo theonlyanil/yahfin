@@ -1,5 +1,7 @@
 # YahFin 0.3.x (Yahoo Finance Python Wrapper - Unofficial)
 
+Pypi: https://pypi.org/project/yahfin/
+
 The Ultimate Yahoo Finance Python module you'll ever need.
 > I was using the other yahoo finance library but it was fetching some of the data through web scrapping which was slow and some of its features didn't work at all.
 
