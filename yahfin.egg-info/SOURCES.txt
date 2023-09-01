@@ -1,6 +1,8 @@
+LICENSE
 README.md
 setup.py
 tests/__init__.py
+tests/speed_test.py
 tests/unittest.py
 yahfin/__init__.py
 yahfin/engines.py

@@ -1,4 +1,4 @@
-# YahFin 0.3.x (Yahoo Finance Python Wrapper - Unofficial)
+# YahFin v1.0 (Yahoo Finance Python Wrapper - Unofficial)
 
 Pypi: https://pypi.org/project/yahfin/
 
