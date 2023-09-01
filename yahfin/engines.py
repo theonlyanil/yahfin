@@ -33,10 +33,10 @@ def adv_requests(api_url, web_url="https://query2.finance.yahoo.com/v10/finance/
     reque = session.get(web_url)
     cookies = dict(reque.cookies)
 
-    req = session.get(api_url, headers=headers, cookies=cookies)
+    res = session.get(api_url, headers=headers)
     session.cookies.clear()
 
-    return req
+    return res
 """END_OF_ADVANCED_REQUESTS"""
 
 
@@ -72,6 +72,7 @@ def v7_options(symbol):
 def v10(symbol, module):
     url = query2 + f'/v10/finance/quoteSummary/{symbol}?modules={module}'
     req = adv_requests(url)
+    print(url)
     try:
         jsonData = req.json()
         data = jsonData['quoteSummary']['result'][0]
