@@ -2,7 +2,7 @@
 import sys
 
 sys.path.append("..")
-from yahfin import yahfin as yf #works when yahfin is not installed
+from yahfin import yahfin as yf
 import yfinance as fy
 from datetime import datetime
 

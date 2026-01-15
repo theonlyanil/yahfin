@@ -3,8 +3,8 @@ import time
 import datetime
 import pdb
 
-from utils import chunk_list, epochToDatetimeList, returnDf, formatColumns
-from engines import v8_period, v8_range, v7multi, v10, v7_options
+from .utils import chunk_list, epochToDatetimeList, returnDf, formatColumns
+from .engines import v8_period, v8_range, v7multi, v10, v7_options
 
 """ Gets a company's asset profile as in: address, summary, website, employees, etc. """
 def getAssetProfile(symbol, kmp):

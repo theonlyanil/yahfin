@@ -6,41 +6,6 @@ from stealthkit import StealthSession
 query1 = 'https://query1.finance.yahoo.com'
 query2 = 'https://query2.finance.yahoo.com'
 
-<<<<<<< HEAD
-"""
-    Advanced Requests
-
-    api_url: The endpoint we want to fetch data from.
-    web_url: [Optional] Website url of a particular page, default is available.
-"""
-def adv_requests(api_url, web_url="https://query2.finance.yahoo.com/v10/finance/quoteSummary/AAPL?modules=assetProfile%2CearningsHistory"):
-
-    # Request Headers
-    headers = {
-        "accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
-        "accept-encoding": "gzip, deflate, br",
-        "accept-language": "en,hi;q=0.9",
-        "cache-control": "no-cache",
-        "pragma": "no-cache",
-        "referer": "https://finance.yahoo.com/",
-        "sec-ch-ua": '" Not;A Brand";v="99", "Google Chrome";v="91", "Chromium";v="91"',
-        "sec-ch-ua-mobile": "?0",
-        "sec-fetch-dest": "image",
-        "sec-fetch-mode": "no-cors",
-        "sec-fetch-site": "same-site",
-        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36"
-    }
-    session = requests.Session()
-    reque = session.get(web_url)
-    cookies = dict(reque.cookies)
-
-    res = session.get(api_url, headers=headers)
-    session.cookies.clear()
-
-    return res
-"""END_OF_ADVANCED_REQUESTS"""
-
-=======
 class YFEngine(StealthSession):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -72,16 +37,10 @@ def v1(symbol):
     Below engines might have deprecated.
     Need to get newer endpoints to make them to work.
 """
->>>>>>> 2611e32 (everything's working)
 
 """ Yahoo Finance V7 Multi Endpoint """
 """ Yahoo Finance V7 Multi-Symbol Engine """
 def v7multi(symbols):
-<<<<<<< HEAD
-    url = query2 + f"/v7/finance/quote?symbols={symbols}"
-    req = adv_requests(url)#requests.get(url)
-    jsonData = req.json()
-=======
     # Standardize the endpoint - query2 is often more stable for bulk data
     url = f"{query2}/v7/finance/quote"
     
@@ -91,7 +50,6 @@ def v7multi(symbols):
         "crumb": yfsession.crumb
     }
 
->>>>>>> 2611e32 (everything's working)
     try:
         req = yfsession.get(url, params=params)
         req.raise_for_status() # Catch 401/429/500 errors immediately
@@ -115,21 +73,6 @@ def v7multi(symbols):
         return f"v7multi Error: {str(e)}"
 
 """ Yahoo Finance V7 Options Endpoint """
-<<<<<<< HEAD
-def v7_options(symbol):
-    url = query1 + f'/v7/finance/options/{symbol}'
-    req = adv_requests(url)#requests.get(url)
-    jsonData = req.json()
-    optionData = jsonData['optionChain']['result'][0]
-    #print(url)
-    return optionData
-
-""" Yahoo Finance V10 Single Symbol Endpoint with Module(s) feature """
-def v10(symbol, module):
-    url = query2 + f'/v10/finance/quoteSummary/{symbol}?modules={module}'
-    req = adv_requests(url)
-    print(url)
-=======
 def v7_options(symbol, date=None):
     # Ensure we use the correct query URL
     url = f"{query1}/v7/finance/options/{symbol}"
@@ -177,7 +120,6 @@ def v10(symbol, module):
     }
     
     req = yfsession.get(url, params=params)
->>>>>>> 2611e32 (everything's working)
     try:
         jsonData = req.json()
         return jsonData['quoteSummary']['result'][0]
@@ -199,19 +141,12 @@ def v8_range(symbol, range, interval):
 
 """ Yahoo Finance V8 """
 def v8(url):
-<<<<<<< HEAD
-    #print(url)
-    req = adv_requests(url)
-    jsonData = req.json()
-
-=======
     # Optimisation: Automatically append the crumb from the session
     connector = '&' if '?' in url else '?'
     final_url = f"{url}{connector}crumb={yfsession.crumb}"
     
     print(f"Requesting: {final_url}") # Useful for your initial testing
     
->>>>>>> 2611e32 (everything's working)
     try:
         req = yfsession.get(final_url)
         # Check for HTTP errors (401, 429, etc.) before parsing JSON

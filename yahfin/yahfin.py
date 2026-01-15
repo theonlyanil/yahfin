@@ -5,7 +5,7 @@
     by Anil Sardiwal
     Started on 8th Nov'20
 """
-from functions import getIncomeStatementHistory,  getAssetProfile,  getLivePriceData,  getMultiSymbolData, getHistoricPrices, getIncomeStatementsQtr, getBalanceSheetYearly, getBalanceSheetQtrly, getCashFlowsYearly, getCashFlowsQtrly, getFinancialAnalysisData, getMajorHolders, getOptionsData
+from .functions import getIncomeStatementHistory,  getAssetProfile,  getLivePriceData,  getMultiSymbolData, getHistoricPrices, getIncomeStatementsQtr, getBalanceSheetYearly, getBalanceSheetQtrly, getCashFlowsYearly, getCashFlowsQtrly, getFinancialAnalysisData, getMajorHolders, getOptionsData
 
 # Symbol class object
 class Symbol:
@@ -60,11 +60,11 @@ if __name__ == "__main__":
     #print(msft.profile())
     #print(reliance.history(period='1y', interval='1d'))
     #print(tsla.options('puts').to_csv('options_data.csv'))
-    print(tsla.options('puts'))
+    #print(tsla.options('puts'))
     #print(multi.multi())
 
     msft = Symbol('AAPL')
-    print(msft.profile())
+    #print(msft.profile())
     #print(msft.history())
 
     #symbols = Symbol('TSLA, MSFT, AAPL, GOOG')
