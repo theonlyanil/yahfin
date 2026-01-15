@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "yahfin"
+version = "1.1.0"
+authors = [
+  { name="Anil Sardiwal", email="theonlyanil@gmail.com" },
+]
+description = "Yahoo Finance Python Wrapper (Unofficial)"
+readme = "README.md"
+requires-python = ">=3.7.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules"
+]
+dependencies = [
+    "requests",
+    "pandas",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/theonlyanil/yahfin"
+"Bug Tracker" = "https://github.com/theonlyanil/yahfin/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
