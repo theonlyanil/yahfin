@@ -1,0 +1,29 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+ENV/
+build/
+dist/
+*.egg-info/
+
+# --- Streamlit ---
+# IMPORTANT: Never commit your secrets!
+.streamlit/secrets.toml
+# Optional: Ignore local config if you change it often
+# .streamlit/config.toml
+
+# --- Environment/Secrets ---
+.env
+.flaskenv
+
+# --- OS Specific ---
+.DS_Store
+Thumbs.db
+
+# --- IDEs ---
+.vscode/
+.idea/
