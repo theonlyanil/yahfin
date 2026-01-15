@@ -63,11 +63,8 @@ if __name__ == "__main__":
     print(tsla.options('puts'))
     #print(multi.multi())
 
-<<<<<<< HEAD
     msft = Symbol('AAPL')
     print(msft.profile())
-=======
->>>>>>> 2611e32 (everything's working)
     #print(msft.history())
 
     #symbols = Symbol('TSLA, MSFT, AAPL, GOOG')
