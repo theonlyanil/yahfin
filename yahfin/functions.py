@@ -1,5 +1,6 @@
 import pandas as pd
 import time
+import datetime
 import pdb
 
 from utils import chunk_list, epochToDatetimeList, returnDf, formatColumns
@@ -49,42 +50,41 @@ def getLivePriceData(symbol):
 
     Outputs: CMP, marketCap, Day High+Low+Volume, bid_ask, and more!
 """
-def getMultiSymbolData(symbols):
-    # A base DataFrame to which we will append more DFs later in this function.
-    base_df = pd.DataFrame()
+def getMultiSymbolData(symbols_str):
+    # 1. Clean and unique-ify the symbols list
+    # Strip spaces and split by comma
+    raw_list = [s.strip() for s in symbols_str.split(',') if s.strip()]
+    symbol_set = sorted(set(raw_list))
 
-    # first remove spaces, if any
-    symbols = symbols.replace(" ", "")
-    # Extract every symbol separated by comma and this makes a list
-    symbolss = symbols.split(',')
+    if not symbol_set:
+        return 'No symbols were passed'
 
-    # Filter list(symbolss) to drop '' and make a set (unique vals) and sort it
-    symbolSet = sorted(set(filter(None, symbolss)))
+    # 2. Prepare a list to hold the DataFrames
+    all_dfs = []
+    
+    # 3. Chunking logic (Optimized)
+    chunk_size = 100
+    for i in range(0, len(symbol_set), chunk_size):
+        chunk = symbol_set[i:i + chunk_size]
+        symbols_chunk_str = ",".join(chunk)
+        
+        print(f"Fetching chunk {i//chunk_size + 1}: {len(chunk)} symbols")
+        
+        # Fetch data using your existing v7multi
+        df_chunk = v7multi(symbols_chunk_str)
+        
+        # Ensure we actually got a DataFrame back (handle errors)
+        if isinstance(df_chunk, pd.DataFrame):
+            all_dfs.append(df_chunk)
+        else:
+            print(f"Warning: Failed to fetch data for chunk starting with {chunk[0]}")
 
-    # if symbolSet length is  more than 100, split it into multiples of 100, and
-    # find values and attach to one DataFrame
-    if len(symbolSet) > 100:
-        # Splitting a list into multiple lists of size 100
-        symbolList = list(chunk_list(symbolSet, 100))
-
-        # Iterate through each list containing
-        for singleSymbolList in symbolList:
-            # convert list into a single String
-            symbols = ",".join(str(x) for x in singleSymbolList)
-
-            # Run v7multi and get a DataFrame and append to base_df
-            base_df = base_df.append(v7multi(symbols))
-    else:
-        # convert list into a single String
-        if symbolSet[0] == '':
-            return 'No symbols were passed'
-
-        symbols = ",".join(str(x) for x in symbolSet)
-
-        # Run v7multi and get a DataFrame and append to base_df
-        base_df = base_df.append(v7multi(symbols))
-
-    return base_df
+    # 4. Final Merge (The "Apt" way)
+    if not all_dfs:
+        return "Failed to retrieve any data."
+        
+    final_df = pd.concat(all_dfs, ignore_index=True)
+    return final_df
 
 """
     It gets symbol's historic price data (open, high, low, close) with timestamps.
@@ -191,26 +191,27 @@ def getFinancialAnalysisData(symbol):
 """
 def getMajorHolders(symbol):
     try:
-        holders = v10(symbol, 'majorHoldersBreakdown')['majorHoldersBreakdown']
-        df = pd.DataFrame(holders)
+        data = v10(symbol, 'majorHoldersBreakdown')
+        # Check if v10 returned an error string or valid dict
+        if isinstance(data, str): return data 
+        
+        breakdown = data['majorHoldersBreakdown']
 
-        # Keep only the first row i.e. 'raw'
-        df = df.iloc[:1]
+        # Extracting raw values directly (Clean & Fast)
+        promoters = breakdown.get('insidersPercentHeld', {}).get('raw', 0)
+        institutions = breakdown.get('institutionsPercentHeld', {}).get('raw', 0)
+        inst_count = breakdown.get('institutionsCount', {}).get('raw', 0)
 
-        # renaming columns
-        df = df.rename(columns={"insidersPercentHeld": "promoters", "institutionsFloatPercentHeld": "institutions"})
+        others = round(1 - (promoters + institutions), 5)
 
-        pd.to_numeric(df['promoters'])
-        pd.to_numeric(df['institutions'])
-
-        # creating a new column: 'retailers': {1 - (promoters + institutions)}
-        df['retailers'] =  1 - (df['promoters'] + df['institutions'])
-        df = df[['promoters', 'institutions', 'retailers', 'institutionsCount']]
-
-        return df.to_dict('records')[0] # return as a dict
+        return {
+            "promoters": round(promoters * 100, 2),
+            "institutions": round(institutions * 100, 2),
+            "others": round(others * 100, 2),
+            "institutionsCount": inst_count
+        }
     except Exception as e:
-        error = v10(symbol, 'majorHoldersBreakdown')
-        return error
+        return f"Processing Error: {str(e)}"
 
 
 """
@@ -218,30 +219,65 @@ def getMajorHolders(symbol):
     This function gets options data of a given symbol. Probably only available for US stocks.
     Also takes in an input of dataType i.e. calls, puts, dates, strikes, quotes
 """
-def getOptionsData(symbol, dataType):
-    optionsData = v7_options(symbol)
-    options = None
+def getOptionsData(symbol, dataType, date=None):
+    # Pass the date param to the engine
+    optionsData = v7_options(symbol, date)
+    
+    if not optionsData:
+        return pd.DataFrame() # Return empty DF on failure
 
     try:
-        if dataType == 'calls':
-            options = optionsData['options'][0]['calls']
-        elif dataType == 'puts':
-            options = optionsData['options'][0]['puts']
-        elif dataType == 'dates':
-            options = optionsData['expirationDates']
-            options = epochToDatetimeList(options)  #because timestamps are unreadable in raw format
-        elif dataType == 'strikes':
-            options = optionsData['strikes']
-        elif dataType == 'quotes':
-            options = optionsData['quote']
-            # Passes scaler values, so had to pass an index and return function from here.
-            df = pd.DataFrame(options, index=[0])
-            return df.to_dict('records')[0] # return as a dict
-        else:
-            # Wrong dataType, empty dataFrame is returned.
+        # 1. Simple List/Dict Returns (Metadata)
+        if dataType == 'dates':
+            # Extract timestamps from the root 'expirationDates' list
+            dates = optionsData.get('expirationDates', []) #
+            return [datetime.datetime.fromtimestamp(d).strftime('%Y-%m-%d') for d in dates]            
+        
+        if dataType == 'strikes':
+            return optionsData.get('strikes', []) #
+            
+        if dataType == 'quotes':
+            # Return the raw dict directly; converting to DF and back is inefficient
+            return optionsData.get('quote', {}) #
+
+        # 2. Complex DataFrame Returns (Calls/Puts)
+        # Check if the specific options chain list exists
+        chain_list = optionsData.get('options', [])
+        if not chain_list:
             return pd.DataFrame()
 
-        df = pd.DataFrame(options)
+        # Extract the specific list of contracts
+        raw_contracts = []
+        if dataType == 'calls':
+            raw_contracts = chain_list[0].get('calls', []) #
+        elif dataType == 'puts':
+            raw_contracts = chain_list[0].get('puts', []) #
+        else:
+            return pd.DataFrame()
+
+        # 3. Create and CLEAN the DataFrame
+        df = pd.DataFrame(raw_contracts)
+        
+        if df.empty:
+            return df
+
+        # FLATTENING LOGIC: Extract 'raw' values from Yahoo's dict wrappers
+        # Example: {'raw': 284.16, 'fmt': '284.16'} -> 284.16
+        for col in df.columns:
+            # We check the first non-null value to see if it's a dict
+            first_valid = df[col].dropna().iloc[0] if not df[col].dropna().empty else None
+            
+            if isinstance(first_valid, dict) and 'raw' in first_valid:
+                # Apply extraction to the whole column
+                df[col] = df[col].apply(lambda x: x['raw'] if isinstance(x, dict) else x)
+        
+        # 4. Standardize Dates (Optional but recommended)
+        # Convert Unix timestamps to readable dates if they exist
+        if 'lastTradeDate' in df.columns:
+            df['lastTradeDate'] = pd.to_datetime(df['lastTradeDate'], unit='s')
+
         return df
+
     except Exception as e:
-        return []
+        print(f"Parsing Error: {str(e)}")
+        return pd.DataFrame()

@@ -54,12 +54,20 @@ class Symbol:
 # Test!
 if __name__ == "__main__":
     tsla = Symbol('TSLA')
+    reliance = Symbol('RELIANCE.NS')
     multi = Symbol('TSLA, AAPL, GOOG, AMZN')
-    #msft = Symbol('MSFT')
+    msft = Symbol('MSFT')
     #print(msft.profile())
+    #print(reliance.history(period='1y', interval='1d'))
+    #print(tsla.options('puts').to_csv('options_data.csv'))
+    print(tsla.options('puts'))
+    #print(multi.multi())
 
+<<<<<<< HEAD
     msft = Symbol('AAPL')
     print(msft.profile())
+=======
+>>>>>>> 2611e32 (everything's working)
     #print(msft.history())
 
     #symbols = Symbol('TSLA, MSFT, AAPL, GOOG')
