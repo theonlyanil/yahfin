@@ -136,7 +136,6 @@ def v8_period(symbol, start_date, end_date, interval):
 """ Yahoo Finance V8 Single Symbol Endpoint with range and interval """
 def v8_range(symbol, range, interval):
     url = f'{query2}/v8/finance/chart/{symbol}?interval={interval}&range={range}&events=divsplit'
-    print(url)
     return v8(url)
 
 """ Yahoo Finance V8 """
@@ -144,8 +143,6 @@ def v8(url):
     # Optimisation: Automatically append the crumb from the session
     connector = '&' if '?' in url else '?'
     final_url = f"{url}{connector}crumb={yfsession.crumb}"
-    
-    print(f"Requesting: {final_url}") # Useful for your initial testing
     
     try:
         req = yfsession.get(final_url)
