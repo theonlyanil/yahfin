@@ -116,3 +116,9 @@ The Ultimate Yahoo Finance Python module you'll ever need.
 
 ### Requirements
 stealthkit pandas
+
+
+### Need market data pipelines built for you?
+YahFin is maintained by [Unreal Brains](https://unrealbrains.com). We build custom market data pipelines and live dashboards for Indian markets (NSE) and for protected sources that need anti-bot-resilient extraction.
+
+[Talk to us →](https://unrealbrains.com/services/custom-market-data-pipelines?utm_source=github&utm_medium=readme&utm_campaign=yahfin)
